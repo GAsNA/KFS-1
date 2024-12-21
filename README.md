@@ -2,9 +2,15 @@
 
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
-**NB**: The project technically works (for the mandatory part), but there is a lot of rework to do (I will do it very soon), and the bonus part is missing (I think it can be easy).
+**NB**: The project technically works, but the bonus part is still missing (I think it can be easy).
 
-## Compilation (temporary)
+## Compilation
+
+### Simple way
+
+``make``
+
+### Hard way
 
 ``nasm -f elf32 boot.asm -o boot.o``
 
@@ -12,15 +18,13 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 ``ld -m elf_i386 -T link.ld -o [your kernel name] boot.o kernel.o``
 
-<i><u>It is recommended to name your kernel with the formal</u></i>: ``kernel-<version>``. I named mine "kernel-kfs.1.rleseur".
+<i>It is recommended to name your kernel with the formal</i>: ``kernel-<version>``. <i>I named mine "kernel-kfs.1.rleseur".</i>
 
 ## Installation
 
 - Take the last Debian ISO and make a VM in virtualbox.
 
 - Clone the repo in it.
-
-- Install vim with ``sudo apt install vim``.
 
 - Copy the compiled kernel in ``/boot`` directory.
 
