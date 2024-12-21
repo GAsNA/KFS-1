@@ -27,6 +27,7 @@ AS_FLAGS = -f elf32
 CC_FLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
 LD_FLAGS = -m elf_i386 -z noexecstack
 
+# RULES
 all: ${BUILD_OBJS}
 	${LD} ${LD_FLAGS} -T ${LD_SRC} -o ${NAME} ${BUILD_OBJS}
 
@@ -45,9 +46,5 @@ fclean: clean
 	rm -rf ${NAME}
 
 re: fclean all
-
-# nasm -f elf32 boot.asm -o boot.o
-# gcc -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs -c kernel.c -o kernel.o
-# ld -m elf_i386 -T link.ld -o kernel-kfs.1.rleseur.2 boot.o kernel.o
 
 .PHONY: all clean fclean re
