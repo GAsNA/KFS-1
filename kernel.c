@@ -1,22 +1,26 @@
-void main(void)
+void blank_screen(void)
 {
-	const char *str = "my first kernel";
-	char *vidptr = (char*)0xb8000;			//video mem begins here.
+	char *vidptr = (char*)0xb8000;	//video mem begins here.
 	unsigned int i = 0;
-	unsigned int j = 0;
 
 	/* this loops clears the screen
 	 * there are 25 lines each of 80 columns;
 	 * each element takes 2 bytes */
-	while(j < 80 * 25 * 2) {
+	while(i < 80 * 25 * 2) {
 		/* blank character */
-		vidptr[j] = ' ';
+		vidptr[i] = ' ';
 		/* attribute-byte - light grey on black screen */
-		vidptr[j+1] = 0x07; 		
-		j = j + 2;
+		vidptr[i+1] = 0x07; 		
+		i += 2;
 	}
+}
 
-	j = 0;
+void write_on_screen(char *str)
+{
+	char *vidptr = (char*)0xb8000;	//video mem begins here.
+
+	unsigned int i = 0;
+	unsigned int j = 0;
 
 	/* this loop writes the string to video memory */
 	while(str[j] != '\0') {
@@ -27,6 +31,15 @@ void main(void)
 		++j;
 		i = i + 2;
 	}
+}
+
+void main(void)
+{
+	char *str = "42";
+
+	blank_screen();
+
+	write_on_screen(str);
 
 	return;
 }
