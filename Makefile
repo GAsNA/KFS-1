@@ -2,32 +2,41 @@
 NAME = kernel-kfs.1.rleseur
 
 BUILD_DIR = build/
+SRC_DIR = src/
 
-AS_SRCS = boot.asm
-CC_SRCS = kernel.c
-LD_SRCS = link.ld
+BOOT_DIR = ${SRC_DIR}boot/
+KERNEL_DIR = ${SRC_DIR}kernel/
+LD_DIR = ${SRC_DIR}
 
-OBJS = ${AS_SRCS:.asm=.o} ${CC_SRCS:.c=.o}
+BOOT_FILES = boot.asm
+KERNEL_FILES = kernel.c
+LD_FILES = link.ld
+
+BOOT_SRC = ${addprefix ${BOOT_DIR}, ${BOOT_FILES}}
+KERNEL_SRC = ${addprefix ${KERNEL_DIR}, ${KERNEL_FILES}}
+LD_SRC = ${addprefix ${LD_DIR}, ${LD_FILES}}
+
+OBJS = ${BOOT_FILES:.asm=.o} ${KERNEL_FILES:.c=.o}
 BUILD_OBJS = ${addprefix ${BUILD_DIR}, ${OBJS}}
 
 AS = nasm
 CC = gcc
 LD = ld
 
-CC_FLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
 AS_FLAGS = -f elf32
-LD_FLAGS = -m elf_i386
+CC_FLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
+LD_FLAGS = -m elf_i386 -z noexecstack
 
 all: ${BUILD_OBJS}
-	${LD} ${LD_FLAGS} -T ${LD_SRCS} -o ${NAME} ${BUILD_OBJS}
+	${LD} ${LD_FLAGS} -T ${LD_SRC} -o ${NAME} ${BUILD_OBJS}
 
-${BUILD_DIR}%.o: %.asm
+${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 	mkdir -p ${BUILD_DIR}
-	${AS} ${AS_FLAGS} ${AS_SRCS} -o $@
+	${AS} ${AS_FLAGS} ${BOOT_SRC} -o $@
 
-${BUILD_DIR}%.o: %.c
+${BUILD_DIR}%.o: ${KERNEL_DIR}%.c
 	mkdir -p ${BUILD_DIR}
-	${CC} ${CC_FLAGS} -c ${CC_SRCS} -o $@
+	${CC} ${CC_FLAGS} -c ${KERNEL_SRC} -o $@
 
 clean:
 	rm -rf ${BUILD_DIR}
@@ -35,6 +44,10 @@ clean:
 fclean: clean
 	rm -rf ${NAME}
 
+re: fclean all
+
 # nasm -f elf32 boot.asm -o boot.o
 # gcc -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs -c kernel.c -o kernel.o
 # ld -m elf_i386 -T link.ld -o kernel-kfs.1.rleseur.2 boot.o kernel.o
+
+.PHONY: all clean fclean re
