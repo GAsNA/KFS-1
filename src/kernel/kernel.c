@@ -1,3 +1,5 @@
+#include "keyboard.h"
+
 void blank_screen(void)
 {
 	char *vidptr = (char*)0xb8000;	//video mem begins here.
@@ -40,6 +42,9 @@ void main(void)
 	blank_screen();
 
 	write_on_screen(str);
+
+	idt_init();
+	kb_init();
 
 	return;
 }

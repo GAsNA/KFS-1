@@ -9,7 +9,7 @@ KERNEL_DIR = ${SRC_DIR}kernel/
 LD_DIR = ${SRC_DIR}
 
 BOOT_FILES = boot.asm
-KERNEL_FILES = kernel.c
+KERNEL_FILES = kernel.c keyboard.c
 LD_FILES = link.ld
 
 BOOT_SRC = ${addprefix ${BOOT_DIR}, ${BOOT_FILES}}
@@ -37,7 +37,7 @@ ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 
 ${BUILD_DIR}%.o: ${KERNEL_DIR}%.c
 	mkdir -p ${BUILD_DIR}
-	${CC} ${CC_FLAGS} -c ${KERNEL_SRC} -o $@
+	${CC} ${CC_FLAGS} -c $< -o $@
 
 clean:
 	rm -rf ${BUILD_DIR}
