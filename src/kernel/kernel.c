@@ -35,7 +35,7 @@ void write_on_screen(char *str)
 
 void main(void)
 {
-	char *str = "42";
+	char *str = "42 - rleseur";
 
 	blank_screen();
 
