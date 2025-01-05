@@ -1,38 +1,45 @@
-#include "keyboard.h"
+#include "kernel.h"
+
+t_terminal terminal =	{
+							.vidptr = (char*)0xb8000,
+							.current_loc = 0
+						};
 
 void blank_screen(void)
 {
-	char *vidptr = (char*)0xb8000;	//video mem begins here.
+	//char *vidptr = (char*)0xb8000;	//video mem begins here.
 	unsigned int i = 0;
 
 	/* this loops clears the screen
 	 * there are 25 lines each of 80 columns;
 	 * each element takes 2 bytes */
-	while(i < 80 * 25 * 2) {
+	while(i < SCREENSIZE) {
 		/* blank character */
-		vidptr[i] = ' ';
+		terminal.vidptr[i++] = ' ';
 		/* attribute-byte - light grey on black screen */
-		vidptr[i+1] = 0x07; 		
-		i += 2;
+		terminal.vidptr[i++] = 0x07; 		
 	}
 }
 
 void write_on_screen(char *str)
 {
-	char *vidptr = (char*)0xb8000;	//video mem begins here.
+	//char *vidptr = (char*)0xb8000;	//video mem begins here.
 
 	unsigned int i = 0;
-	unsigned int j = 0;
 
 	/* this loop writes the string to video memory */
-	while(str[j] != '\0') {
+	while(str[i] != '\0') {
 		/* the character's ascii */
-		vidptr[i] = str[j];
+		terminal.vidptr[terminal.current_loc++] = str[i++];
 		/* attribute-byte: give character black bg and light grey fg */
-		vidptr[i+1] = 0x07;
-		++j;
-		i = i + 2;
+		terminal.vidptr[terminal.current_loc++] = 0x07;
 	}
+}
+
+void newline_on_screen(void)
+{
+	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
+	terminal.current_loc += line_size - terminal.current_loc % line_size;
 }
 
 void main(void)
@@ -43,8 +50,13 @@ void main(void)
 
 	write_on_screen(str);
 
+	newline_on_screen();
+	newline_on_screen();
+
 	idt_init();
 	kb_init();
+
+	while(1);
 
 	return;
 }
