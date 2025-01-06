@@ -2,7 +2,15 @@
 
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
-**NB**: The project technically works, but the bonus part is still missing (I think it can be easy).
+**Available options**:
+- Color support
+- Keyboard handler
+- Helper 'printk'
+- Create Iso image from kernel binary
+
+**Missing options**:
+- Scroll and cursor support
+- Different screens helper and keyboard shortcut
 
 ## KERNEL
 
@@ -10,15 +18,17 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 #### Simple way
 
-``make``
+```
+make
+```
 
 #### Hard way
 
-``nasm -f elf32 boot.asm -o boot.o``
-
-``gcc -m32 -c kernel.c -o kernel.o``
-
-``ld -m elf_i386 -T link.ld -o [your kernel name] boot.o kernel.o``
+```
+$ nasm -f elf32 boot.asm -o boot.o
+$ gcc -m32 -c kernel.c -o kernel.o
+$ ld -m elf_i386 -T link.ld -o [your kernel name] boot.o kernel.o
+```
 
 <i>It is recommended to name your kernel with the formal</i>: ``kernel-<version>``. <i>I named mine "kernel-kfs.1.rleseur".</i>
 
@@ -26,11 +36,15 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 #### Simple way
 
-``make run-kernel``
+```
+make run-kernel
+```
 
 #### Hard way
 
-``qemu-system-i386 -kernel [your compiled kernel]``
+```
+qemu-system-i386 -kernel [your compiled kernel]
+```
 
 ### Installation
 
@@ -57,27 +71,32 @@ menuentry 'My Kernel' {
 
 #### Simple way
 
-``make iso``
+```
+make iso
+```
 
 #### Hard way
 
-``mkdir -p /iso/boot/grub``
-
-``cp [your compiled kernel] /iso/boot``
-
-``cp grub.cfg /iso/boot/grub``
-
-``grub-mkrescue -o [your iso name] iso
+```
+$ mkdir -p /iso/boot/grub
+$ cp [your compiled kernel] /iso/boot
+$ cp grub.cfg /iso/boot/grub
+$ grub-mkrescue -o [your iso name] iso
+```
 
 ### Run on QEMU
 
 #### Simple way
 
-``make run-iso``
+```
+make run-iso
+```
 
 #### Hard way
 
-``qemu-system-i386 -boot d -cdrom [your iso] -m 512``
+```
+qemu-system-i386 -boot d -cdrom [your iso] -m 512
+```
 
 ## Resources
 
