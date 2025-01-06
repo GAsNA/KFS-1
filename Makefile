@@ -22,6 +22,7 @@ BUILD_OBJS = ${addprefix ${BUILD_DIR}, ${OBJS}}
 AS = nasm
 CC = gcc
 LD = ld
+QEMU = qemu-system-i386
 
 AS_FLAGS = -f elf32
 CC_FLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
@@ -30,6 +31,9 @@ LD_FLAGS = -m elf_i386 -z noexecstack
 # RULES
 all: ${BUILD_OBJS}
 	${LD} ${LD_FLAGS} -T ${LD_SRC} -o ${NAME} ${BUILD_OBJS}
+
+run: all
+	${QEMU} -kernel ${NAME}
 
 ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 	mkdir -p ${BUILD_DIR}
@@ -47,4 +51,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all run clean fclean re

@@ -21,7 +21,7 @@ extern keyboard_handler_main
 read_port:
 	mov edx, [esp + 4]
 	in al, dx
-	et
+	ret
 
 write_port:
 	mov edx, [esp + 4]
