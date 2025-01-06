@@ -1,7 +1,11 @@
 # CONSTANTS
-NAME = kernel-kfs.1.rleseur
+KERNEL_NAME = kernel-kfs.1.rleseur
+ISO_NAME = kfs-1.rleseur.iso
 
 BUILD_DIR = build/
+ISO_DIR = ${BUILD_DIR}iso/
+ISO_BOOT_DIR = ${ISO_DIR}boot/
+ISO_GRUB_DIR = ${ISO_BOOT_DIR}/grub/
 SRC_DIR = src/
 
 BOOT_DIR = ${SRC_DIR}boot/
@@ -22,6 +26,7 @@ BUILD_OBJS = ${addprefix ${BUILD_DIR}, ${OBJS}}
 AS = nasm
 CC = gcc
 LD = ld
+GRUB = grub-mkrescue
 QEMU = qemu-system-i386
 
 AS_FLAGS = -f elf32
@@ -30,10 +35,19 @@ LD_FLAGS = -m elf_i386 -z noexecstack
 
 # RULES
 all: ${BUILD_OBJS}
-	${LD} ${LD_FLAGS} -T ${LD_SRC} -o ${NAME} ${BUILD_OBJS}
+	${LD} ${LD_FLAGS} -T ${LD_SRC} -o ${KERNEL_NAME} ${BUILD_OBJS}
 
-run: all
-	${QEMU} -kernel ${NAME}
+run-kernel: all
+	${QEMU} -kernel ${KERNEL_NAME}
+
+iso: all
+	mkdir -p ${ISO_GRUB_DIR}
+	cp ${KERNEL_NAME} ${ISO_BOOT_DIR}
+	cp grub.cfg ${ISO_GRUB_DIR}
+	${GRUB} -o ${ISO_NAME} ${ISO_DIR}
+
+run-iso:
+	${QEMU} -m 512 -cdrom ${ISO_NAME}
 
 ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 	mkdir -p ${BUILD_DIR}
@@ -47,8 +61,8 @@ clean:
 	rm -rf ${BUILD_DIR}
 
 fclean: clean
-	rm -rf ${NAME}
+	rm -rf ${KERNEL_NAME} ${ISO_NAME}
 
 re: fclean all
 
-.PHONY: all run clean fclean re
+.PHONY: all run-kernel iso run-iso clean fclean re
