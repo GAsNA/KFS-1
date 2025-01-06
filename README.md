@@ -20,6 +20,16 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 <i>It is recommended to name your kernel with the formal</i>: ``kernel-<version>``. <i>I named mine "kernel-kfs.1.rleseur".</i>
 
+## Run on QEMU
+
+### Simple way
+
+``make run``
+
+### Hard way
+
+``qemu-system-i386 -kernel [your compiled kernel]``
+
 ## Installation
 
 - Take the last Debian ISO and make a VM in virtualbox.
