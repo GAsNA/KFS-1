@@ -4,11 +4,12 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 **Available options**:
 - Color support
-- Keyboard handler
+- Keyboard handler (no capslock)
 - Helper 'printk'
 - Create Iso image from kernel binary
 
 **Missing options**:
+- Keyboard handler for capslock
 - Scroll and cursor support
 - Different screens helper and keyboard shortcut
 
@@ -103,5 +104,7 @@ qemu-system-i386 -boot d -cdrom [your iso] -m 512
 - The BIBLE, for basic kernel: https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 
 - The BIBLE 2, for keyboard: https://arjunsreedharan.org/post/99370248137/kernels-201-lets-write-a-kernel-with-keyboard
+
+- For keyboard scancodes: https://aeb.win.tue.nl/linux/kbd/scancodes-1.html
 
 - For color and build iso image: https://theogill.medium.com/creating-a-kernel-from-scratch-1a1aa569780f
