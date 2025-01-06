@@ -47,7 +47,7 @@ iso: all
 	${GRUB} -o ${ISO_NAME} ${ISO_DIR}
 
 run-iso:
-	${QEMU} -m 512 -cdrom ${ISO_NAME}
+	${QEMU} -boot d -cdrom ${ISO_NAME} -m 512
 
 ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 	mkdir -p ${BUILD_DIR}
