@@ -51,6 +51,8 @@ menuentry 'My Kernel' {
 
 ## Resources
 
-- The BIBLE: https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
+- The BIBLE, for basic kernel: https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
+
+- The BIBLE 2, for keyboard: https://arjunsreedharan.org/post/99370248137/kernels-201-lets-write-a-kernel-with-keyboard
 
 - For color and build iso image: https://theogill.medium.com/creating-a-kernel-from-scratch-1a1aa569780f
