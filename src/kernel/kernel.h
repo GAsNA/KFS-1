@@ -1,12 +1,9 @@
 #ifndef KERNEL_H
 # define KERNEL_H
 
+# include "color.h"
 # include "keyboard.h"
-
-# define NB_LINES 25
-# define NB_COLUMNS 80
-# define BYTES_FOR_ELEMENT 2
-# define SCREENSIZE BYTES_FOR_ELEMENT * NB_COLUMNS * NB_LINES
+# include "screen.h"
 
 typedef struct s_terminal
 {
@@ -15,9 +12,5 @@ typedef struct s_terminal
 } t_terminal;
 
 extern t_terminal terminal;
-
-void blank_screen(void);
-void write_on_screen(char *str, int color);
-void newline_on_screen(void);
 
 #endif

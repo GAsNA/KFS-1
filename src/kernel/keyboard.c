@@ -1,5 +1,4 @@
 #include "kernel.h"
-#include "color.h"
 #include "keyboard_map.h"
 
 struct IDT_entry IDT[IDT_SIZE];
