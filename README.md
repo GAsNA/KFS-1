@@ -4,13 +4,15 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 **NB**: The project technically works, but the bonus part is still missing (I think it can be easy).
 
-## Compilation
+## KERNEL
 
-### Simple way
+### Compilation
+
+#### Simple way
 
 ``make``
 
-### Hard way
+#### Hard way
 
 ``nasm -f elf32 boot.asm -o boot.o``
 
@@ -20,17 +22,17 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 <i>It is recommended to name your kernel with the formal</i>: ``kernel-<version>``. <i>I named mine "kernel-kfs.1.rleseur".</i>
 
-## Run on QEMU
+### Run on QEMU
 
-### Simple way
+#### Simple way
 
-``make run``
+``make run-kernel``
 
-### Hard way
+#### Hard way
 
 ``qemu-system-i386 -kernel [your compiled kernel]``
 
-## Installation
+### Installation
 
 - Take the last Debian ISO and make a VM in virtualbox.
 
@@ -48,6 +50,34 @@ menuentry 'My Kernel' {
 ```
 
 - Reboot and select ``My Kernel`` entry.
+
+## ISO
+
+### Compilation
+
+#### Simple way
+
+``make iso``
+
+#### Hard way
+
+``mkdir -p /iso/boot/grub``
+
+``cp [your compiled kernel] /iso/boot``
+
+``cp grub.cfg /iso/boot/grub``
+
+``grub-mkrescue -o [your iso name] iso
+
+### Run on QEMU
+
+#### Simple way
+
+``make run-iso``
+
+#### Hard way
+
+``qemu-system-i386 -boot d -cdrom [your iso] -m 512``
 
 ## Resources
 
