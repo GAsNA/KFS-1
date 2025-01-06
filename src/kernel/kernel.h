@@ -17,7 +17,7 @@ typedef struct s_terminal
 extern t_terminal terminal;
 
 void blank_screen(void);
-void write_on_screen(char *str);
+void write_on_screen(char *str, int color);
 void newline_on_screen(void);
 
 #endif
