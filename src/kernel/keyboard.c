@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "color.h"
 #include "keyboard_map.h"
 
 struct IDT_entry IDT[IDT_SIZE];
@@ -82,6 +83,6 @@ void keyboard_handler_main(void) {
 			return;
 		}
 		terminal.vidptr[terminal.current_loc++] = keyboard_map[keycode];
-		terminal.vidptr[terminal.current_loc++] = 0x07;
+		terminal.vidptr[terminal.current_loc++] = LIGHT_GRAY;
 	}
 }

@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "color.h"
 
 t_terminal terminal =	{
 							.vidptr = (char*)0xb8000,
@@ -7,7 +8,6 @@ t_terminal terminal =	{
 
 void blank_screen(void)
 {
-	//char *vidptr = (char*)0xb8000;	//video mem begins here.
 	unsigned int i = 0;
 
 	/* this loops clears the screen
@@ -17,14 +17,12 @@ void blank_screen(void)
 		/* blank character */
 		terminal.vidptr[i++] = ' ';
 		/* attribute-byte - light grey on black screen */
-		terminal.vidptr[i++] = 0x07; 		
+		terminal.vidptr[i++] = LIGHT_GRAY; 		
 	}
 }
 
-void write_on_screen(char *str)
+void write_on_screen(char *str, int color)
 {
-	//char *vidptr = (char*)0xb8000;	//video mem begins here.
-
 	unsigned int i = 0;
 
 	/* this loop writes the string to video memory */
@@ -32,7 +30,7 @@ void write_on_screen(char *str)
 		/* the character's ascii */
 		terminal.vidptr[terminal.current_loc++] = str[i++];
 		/* attribute-byte: give character black bg and light grey fg */
-		terminal.vidptr[terminal.current_loc++] = 0x07;
+		terminal.vidptr[terminal.current_loc++] = color;
 	}
 }
 
@@ -48,7 +46,7 @@ void main(void)
 
 	blank_screen();
 
-	write_on_screen(str);
+	write_on_screen(str, BLUE);
 
 	newline_on_screen();
 	newline_on_screen();
