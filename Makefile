@@ -46,7 +46,7 @@ iso: all
 	cp grub.cfg ${ISO_GRUB_DIR}
 	${GRUB} -o ${ISO_NAME} ${ISO_DIR}
 
-run-iso:
+run-iso: iso
 	${QEMU} -boot d -cdrom ${ISO_NAME} -m 512
 
 ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
