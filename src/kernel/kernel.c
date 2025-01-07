@@ -3,7 +3,8 @@
 
 t_terminal terminal =	{
 				.vidptr = (char*)0xb8000,
-				.current_loc = 0
+				.current_loc = 0,
+				.capslock = 0,
 			};
 
 void main(void)

@@ -7,8 +7,9 @@
 
 typedef struct s_terminal
 {
-	char			*vidptr;
+	char		*vidptr;
 	unsigned int	current_loc;
+	int		capslock;
 } t_terminal;
 
 extern t_terminal terminal;
