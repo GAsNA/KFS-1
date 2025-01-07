@@ -9,6 +9,9 @@
 void blank_screen(void);
 void newline_on_screen(void);
 
+void printk_char(char c, int color);
 void printk(char *str, int color);
+
+char *ft_itoa(int n);
 
 #endif

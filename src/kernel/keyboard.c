@@ -65,7 +65,8 @@ void idt_init(void)
 
 void keyboard_handler_main(void) {
 	unsigned char status;
-	char keycode;
+	int keycode;
+	char to_print;
 
 	/* write EOI */
 	write_port(0x20, 0x20);
@@ -74,14 +75,26 @@ void keyboard_handler_main(void) {
 	/* Lowest bit of status will be set if buffer is not empty */
 	if (status & 0x01) {
 		keycode = read_port(KEYBOARD_DATA_PORT);
+		
 		if (keycode < 0)
 			return;
-		if (keycode == ENTER_KEY_CODE)
+		if (keycode == ENTER)
 		{
 			newline_on_screen();
 			return;
 		}
-		terminal.vidptr[terminal.current_loc++] = keyboard_map[keycode];
-		terminal.vidptr[terminal.current_loc++] = LIGHT_GRAY;
+		if (keycode == CAPSLOCK)
+		{
+			terminal.capslock = !terminal.capslock;
+			return;
+		}
+
+		to_print = terminal.capslock ? keyboard_map[keycode].capital 
+			: keyboard_map[keycode].small;
+
+		if (to_print == 0)
+			printk(ft_itoa(keycode), MAGENTA);
+
+		printk_char(to_print, LIGHT_GRAY);
 	}
 }

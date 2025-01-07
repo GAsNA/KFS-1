@@ -13,7 +13,8 @@ extern void	keyboard_handler();
 # define INTERRUPT_GATE 0x8e
 # define ENTER_KEY_CODE 0x1c
 
-struct IDT_entry{
+struct IDT_entry
+{
 	unsigned short int offset_lowerbits;
 	unsigned short int selector;
 	unsigned char zero;
