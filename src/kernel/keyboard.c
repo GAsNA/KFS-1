@@ -65,10 +65,12 @@ void idt_init(void)
 
 void keyboard_handler_main(void) {
 	unsigned char status;
-	int keycode;
+	unsigned char keycode;
 
 	t_key selected_key;
 	char selected_char;
+
+	int is_pressed = 1;
 
 	/* write EOI */
 	write_port(0x20, 0x20);
@@ -77,9 +79,30 @@ void keyboard_handler_main(void) {
 	/* Lowest bit of status will be set if buffer is not empty */
 	if (status & 0x01) {
 		keycode = read_port(KEYBOARD_DATA_PORT);
+
+		/* Check if key is pressed or not */
+		if (keycode >= 0x80)
+			is_pressed = 0;
+		if (!is_pressed)
+			keycode -= 0x80;
 		
+		/* Check if keycode is valid and is shift */
 		if (keycode < 0)
 			return;
+		if (keycode == LSHIFT || keycode == RSHIFT)
+		{
+			if (is_pressed)
+				terminal.shift = 1;
+			else
+				terminal.shift = 0;
+			return;
+		}
+		
+		/* If key is not pressed, do not write on terminal and return */
+		if (!is_pressed)
+			return;
+		
+		/* Check the keycode for non-printable char */
 		if (keycode == ENTER)
 		{
 			newline_on_screen();
@@ -95,21 +118,38 @@ void keyboard_handler_main(void) {
 			terminal.numslock = !terminal.numslock;
 			return;
 		}
-		
+	
+		/* Selected the char given by inputs */
 		selected_key = keyboard_map[keycode];
-			
+
 		if (terminal.numslock && selected_key.numslock != 0)
-			selected_char = selected_key.numslock;
+		{
+			if (!terminal.shift)
+				selected_char = selected_key.numslock;
+			else
+				return;
+		}
 		else if (terminal.capslock && selected_key.capital != 0)
-			selected_char = selected_key.capital;
+		{
+			if (terminal.shift)
+				selected_char = selected_key.small;
+			else
+				selected_char = selected_key.capital;
+		}
 		else if (selected_key.small != 0)
-			selected_char = selected_key.small;
+		{
+			if (terminal.shift)
+				selected_char = selected_key.capital;
+			else
+				selected_char = selected_key.small;
+		}
 		else
 		{
-			printk(ft_itoa(keycode), MAGENTA);
+		//	printk(ft_itoa(keycode), MAGENTA);
 			return;
 		}
 
+		/* Write on terminal the selected char */
 		printk_char(selected_char, LIGHT_GRAY);
 	}
 }

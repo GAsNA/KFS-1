@@ -4,12 +4,11 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 
 **Available options**:
 - Color support
-- Keyboard handler (no numlock + exception)
+- Keyboard handler
 - Helper 'printk'
 - Create Iso image from kernel binary
 
 **Missing options**:
-- Keyboard handler for numlock and exception
 - Scroll and cursor support
 - Different screens helper and keyboard shortcut
 
