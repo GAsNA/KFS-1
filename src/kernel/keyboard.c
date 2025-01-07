@@ -66,7 +66,9 @@ void idt_init(void)
 void keyboard_handler_main(void) {
 	unsigned char status;
 	int keycode;
-	char to_print;
+
+	t_key selected_key;
+	char selected_char;
 
 	/* write EOI */
 	write_port(0x20, 0x20);
@@ -88,13 +90,26 @@ void keyboard_handler_main(void) {
 			terminal.capslock = !terminal.capslock;
 			return;
 		}
-
-		to_print = terminal.capslock ? keyboard_map[keycode].capital 
-			: keyboard_map[keycode].small;
-
-		if (to_print == 0)
+		if (keycode == NUMSLOCK)
+		{
+			terminal.numslock = !terminal.numslock;
+			return;
+		}
+		
+		selected_key = keyboard_map[keycode];
+			
+		if (terminal.numslock && selected_key.numslock != 0)
+			selected_char = selected_key.numslock;
+		else if (terminal.capslock && selected_key.capital != 0)
+			selected_char = selected_key.capital;
+		else if (selected_key.small != 0)
+			selected_char = selected_key.small;
+		else
+		{
 			printk(ft_itoa(keycode), MAGENTA);
+			return;
+		}
 
-		printk_char(to_print, LIGHT_GRAY);
+		printk_char(selected_char, LIGHT_GRAY);
 	}
 }
