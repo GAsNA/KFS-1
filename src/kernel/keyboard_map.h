@@ -33,100 +33,101 @@ typedef struct s_key
 {
 	int	small;
 	int	capital;
+	int numslock;
 } t_key;
 
 t_key keyboard_map[128] =
 {
-	{ .small = 0, .capital = 0 },		/* ERROR */
-	{ .small = 27, .capital = 27 },		/* ESCAPE */
-	{ .small = '1', .capital = '!' },
-	{ .small = '2', .capital = '@' },
-	{ .small = '3', .capital = '#' },
-	{ .small = '4', .capital = '$' },
-	{ .small = '5', .capital = '%' },
-	{ .small = '6', .capital = '^' },
-	{ .small = '7', .capital = '&' },
-	{ .small = '8', .capital = '*' },
-	{ .small = '9', .capital = '(' },
-	{ .small = '0', .capital =')' },
-	{ .small = '-', .capital = '_' },
-	{ .small = '=', .capital = '+' },
-	{ .small = '\b', .capital = '\b' },	/* BACKSPACE */
-	{ .small = '\t', .capital = '\t' },	/* TAB */
-	{ .small = 'q', .capital = 'Q' },
-	{ .small = 'w', .capital = 'W' },
-	{ .small = 'e', .capital = 'E' },
-	{ .small = 'r', .capital = 'R' },
-	{ .small = 't', .capital = 'T' },
-	{ .small = 'y', .capital = 'Y' },
-	{ .small = 'u', .capital = 'U' },
-	{ .small = 'i', .capital = 'I' },
-	{ .small = 'o', .capital = 'O' },
-	{ .small = 'p', .capital = 'P' },
-	{ .small = '[', .capital = '{' },
-	{ .small = ']', .capital = '}' },
-	{ .small = '\n', .capital = '\n' },	/* ENTER */
-	{ .small = 0, .capital = 0 },		/* LCRTL */
-	{ .small = 'a', .capital = 'A' },
-	{ .small = 's', .capital = 'S' },
-	{ .small = 'd', .capital = 'D' },
-	{ .small = 'f', .capital = 'F' },
-	{ .small = 'g', .capital = 'G' },
-	{ .small = 'h', .capital = 'H' },
-	{ .small = 'j', .capital = 'J' },
-	{ .small = 'k', .capital = 'K' },
-	{ .small = 'l', .capital = 'L' },
-	{ .small = ';', .capital = ':' },
-	{ .small = '\'', .capital = '\"' },
-	{ .small = '`', .capital = '~' },
-	{ .small = 0, .capital = 0 },		/* LSHIFT */
-	{ .small = '\\', .capital = '|' },
-	{ .small = 'z', .capital = 'Z' },
-	{ .small = 'x', .capital = 'X' },
-	{ .small = 'c', .capital = 'C' },
-	{ .small = 'v', .capital = 'V' },
-	{ .small = 'b', .capital = 'B' },
-	{ .small = 'n', .capital = 'N' },
-	{ .small = 'm', .capital = 'M' },
-	{ .small = ',', .capital = '<' },
-	{ .small = '.', .capital = '>' },
-	{ .small = '/', .capital = '?' },
-	{ .small = 0, .capital = 0 },		/* RSHIFT */
-	{ .small = '*', .capital = '*' },
-	{ .small = 0, .capital = 0 },		/* LALT */
-	{ .small = ' ', .capital = ' ' },
-	{ .small = 0, .capital = 0 },		/* CAPSLOCK */
-	{ .small = 0, .capital = 0 },		/* F1... */
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },
-	{ .small = 0, .capital = 0 },		/* F10... */
-	{ .small = 0, .capital = 0 },		/* NUMSLOCK */
-	{ .small = 0, .capital = 0 },		/* SCROLLLOCK */
-	{ .small = 0, .capital = 0 },		/* KEYPAD7 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD8 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD9 */
-	{ .small = 0, .capital = 0 },		/* MINUS */
-	{ .small = 0, .capital = 0 },		/* KEYPAD4 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD5 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD6 */
-	{ .small = 0, .capital = 0 },		/* PLUS */
-	{ .small = 0, .capital = 0 },		/* KEYPAD1 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD2 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD3 */
-	{ .small = 0, .capital = 0 },		/* KEYPAD0 */
-	{ .small = 0, .capital = 0 },		/* KEYPADPOINT */
-	{ .small = 0, .capital = 0 },		/* IGNORE1 */
-	{ .small = 0, .capital = 0 },		/* IGNORE2 */
-	{ .small = 0, .capital = 0 },		/* IGNORE3 */
-	{ .small = 0, .capital = 0 },		/* F11 */
-	{ .small = 0, .capital = 0 },		/* F12 */
-	{ .small = 0, .capital = 0 },		/* UNDEFINED */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* ERROR */
+	{ .small = 27, .capital = 27, .numslock = 0 },		/* ESCAPE */
+	{ .small = '1', .capital = '!', .numslock = 0 },
+	{ .small = '2', .capital = '@', .numslock = 0 },
+	{ .small = '3', .capital = '#', .numslock = 0 },
+	{ .small = '4', .capital = '$', .numslock = 0 },
+	{ .small = '5', .capital = '%', .numslock = 0 },
+	{ .small = '6', .capital = '^', .numslock = 0 },
+	{ .small = '7', .capital = '&', .numslock = 0 },
+	{ .small = '8', .capital = '*', .numslock = 0 },
+	{ .small = '9', .capital = '(', .numslock = 0 },
+	{ .small = '0', .capital =')', .numslock = 0 },
+	{ .small = '-', .capital = '_', .numslock = 0 },
+	{ .small = '=', .capital = '+', .numslock = 0 },
+	{ .small = '\b', .capital = '\b', .numslock = 0 },	/* BACKSPACE */
+	{ .small = '\t', .capital = '\t', .numslock = 0 },	/* TAB */
+	{ .small = 'q', .capital = 'Q', .numslock = 0 },
+	{ .small = 'w', .capital = 'W', .numslock = 0 },
+	{ .small = 'e', .capital = 'E', .numslock = 0 },
+	{ .small = 'r', .capital = 'R', .numslock = 0 },
+	{ .small = 't', .capital = 'T', .numslock = 0 },
+	{ .small = 'y', .capital = 'Y', .numslock = 0 },
+	{ .small = 'u', .capital = 'U', .numslock = 0 },
+	{ .small = 'i', .capital = 'I', .numslock = 0 },
+	{ .small = 'o', .capital = 'O', .numslock = 0 },
+	{ .small = 'p', .capital = 'P', .numslock = 0 },
+	{ .small = '[', .capital = '{', .numslock = 0 },
+	{ .small = ']', .capital = '}', .numslock = 0 },
+	{ .small = '\n', .capital = '\n', .numslock = 0 },	/* ENTER */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* LCRTL */
+	{ .small = 'a', .capital = 'A', .numslock = 0 },
+	{ .small = 's', .capital = 'S', .numslock = 0 },
+	{ .small = 'd', .capital = 'D', .numslock = 0 },
+	{ .small = 'f', .capital = 'F', .numslock = 0 },
+	{ .small = 'g', .capital = 'G', .numslock = 0 },
+	{ .small = 'h', .capital = 'H', .numslock = 0 },
+	{ .small = 'j', .capital = 'J', .numslock = 0 },
+	{ .small = 'k', .capital = 'K', .numslock = 0 },
+	{ .small = 'l', .capital = 'L', .numslock = 0 },
+	{ .small = ';', .capital = ':', .numslock = 0 },
+	{ .small = '\'', .capital = '\"', .numslock = 0 },
+	{ .small = '`', .capital = '~', .numslock = 0 },
+	{ .small = 0, .capital = 0 , .numslock = 0},		/* LSHIFT */
+	{ .small = '\\', .capital = '|', .numslock = 0 },
+	{ .small = 'z', .capital = 'Z', .numslock = 0 },
+	{ .small = 'x', .capital = 'X', .numslock = 0 },
+	{ .small = 'c', .capital = 'C', .numslock = 0 },
+	{ .small = 'v', .capital = 'V', .numslock = 0 },
+	{ .small = 'b', .capital = 'B', .numslock = 0 },
+	{ .small = 'n', .capital = 'N', .numslock = 0 },
+	{ .small = 'm', .capital = 'M', .numslock = 0 },
+	{ .small = ',', .capital = '<', .numslock = 0 },
+	{ .small = '.', .capital = '>', .numslock = 0 },
+	{ .small = '/', .capital = '?', .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* RSHIFT */
+	{ .small = 0, .capital = 0, .numslock = '*' },
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* LALT */
+	{ .small = ' ', .capital = ' ', .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* CAPSLOCK */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* F1... */
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* F10... */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* NUMSLOCK */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* SCROLLLOCK */
+	{ .small = 0, .capital = 0, .numslock = '7' },		/* KEYPAD7 */
+	{ .small = 0, .capital = 0, .numslock = '8' },		/* KEYPAD8 */
+	{ .small = 0, .capital = 0, .numslock = '9' },		/* KEYPAD9 */
+	{ .small = 0, .capital = 0, .numslock = '-' },		/* MINUS */
+	{ .small = 0, .capital = 0, .numslock = '4' },		/* KEYPAD4 */
+	{ .small = 0, .capital = 0, .numslock = '5' },		/* KEYPAD5 */
+	{ .small = 0, .capital = 0, .numslock = '6' },		/* KEYPAD6 */
+	{ .small = 0, .capital = 0, .numslock = '+' },		/* PLUS */
+	{ .small = 0, .capital = 0, .numslock = '1' },		/* KEYPAD1 */
+	{ .small = 0, .capital = 0, .numslock = '2' },		/* KEYPAD2 */
+	{ .small = 0, .capital = 0, .numslock = '3' },		/* KEYPAD3 */
+	{ .small = 0, .capital = 0, .numslock = '0' },		/* KEYPAD0 */
+	{ .small = 0, .capital = 0, .numslock = '.' },		/* KEYPADPOINT */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* IGNORE1 */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* IGNORE2 */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* IGNORE3 */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* F11 */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* F12 */
+	{ .small = 0, .capital = 0, .numslock = 0 },		/* UNDEFINED */
 };
 
 #endif

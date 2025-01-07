@@ -10,6 +10,7 @@ typedef struct s_terminal
 	char		*vidptr;
 	unsigned int	current_loc;
 	int		capslock;
+	int		numslock;
 } t_terminal;
 
 extern t_terminal terminal;
