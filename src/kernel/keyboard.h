@@ -27,4 +27,9 @@ extern struct IDT_entry IDT[IDT_SIZE];
 void kb_init(void);
 void idt_init(void);
 
+int is_key_available();
+void simulate_kb_interrupt();
+
+void keyboard_handler_main(void);
+
 #endif
