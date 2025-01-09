@@ -1,5 +1,16 @@
 #include "kernel.h"
 
+void add_to_console_buffer(char c, int color)
+{
+	terminal.screens[terminal.current_screen]
+		.buffer[terminal.screens[terminal.current_screen].current_loc++] = c;
+	terminal.screens[terminal.current_screen]
+		.buffer[terminal.screens[terminal.current_screen].current_loc++] = color;
+
+	terminal.vidptr[terminal.current_loc++] = c;
+	terminal.vidptr[terminal.current_loc++] = color;
+}
+
 /**
  * Blank the entire console
  *
@@ -13,9 +24,7 @@ void clear_console(void)
 	 * there are 25 lines each of 80 columns;
 	 * each element takes 2 bytes */
 	while(i < SCREENSIZE) {
-		/* blank character */
 		terminal.vidptr[i++] = ' ';
-		/* attribute-byte - light grey on black screen */
 		terminal.vidptr[i++] = LIGHT_GRAY; 		
 	}
 }
@@ -62,9 +71,7 @@ void printk_char(char c, int color)
 		return;
 	}
 
-	/* the character's ascii */
 	terminal.vidptr[terminal.current_loc++] = c;
-	/* attribute-byte: give character black bg and light grey fg */
 	terminal.vidptr[terminal.current_loc++] = color;
 }
 
