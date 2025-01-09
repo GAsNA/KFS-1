@@ -5,7 +5,7 @@
  *
  * @return void
  */
-void blank_console(void)
+void clear_console(void)
 {
 	unsigned int i = 0;
 

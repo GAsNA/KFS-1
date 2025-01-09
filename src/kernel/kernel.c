@@ -10,9 +10,9 @@ t_terminal terminal =	{
 
 void main(void)
 {
-	blank_console();
+	clear_console();
 
-	printk("42 - rleseur", BLUE);
+	printk("42 - rleseur", LIGHT_BLUE);
 	newline_on_console();
 
 	newline_on_console();
