@@ -6,6 +6,8 @@
 # define BYTES_FOR_ELEMENT 2
 # define SCREENSIZE BYTES_FOR_ELEMENT * NB_COLUMNS * NB_LINES
 
+# define TAB_SIZE 4
+
 void blank_console(void);
 void newline_on_console(void);
 
