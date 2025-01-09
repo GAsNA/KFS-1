@@ -1,8 +1,14 @@
 #include "kernel.h"
 #include "keyboard_map.h"
 
-// Function from the sys/io.h file
-// Allows to read a byte of the content of an input/output port
+/**
+ * Allows to read a byte of the content of an input/output port
+ *
+ * Function from the sys/io.h file
+ *
+ * @param __port port on which data is read
+ * @return char of data read
+ */
 static __inline unsigned char inb (unsigned short int __port)
 {
 	unsigned char _v;
@@ -11,21 +17,33 @@ static __inline unsigned char inb (unsigned short int __port)
 	return _v;
 }
 
-// Return true (1) if a byte is read from port 0x64
-int is_key_available()
+/**
+ * Return true (1) if a byte is read from port 0x64
+ *
+ * @return true or false
+ */
+int is_key_available(void)
 {
 	return (inb(KEYBOARD_STATUS_PORT) & 1) == 1;
 }
 
-// If a key (byte) is read on the keyboard port, process the information
-void simulate_kb_interrupt()
+/**
+ * If a byte is read on the keyboard port, process the information
+ *
+ * @return void
+ */
+void simulate_keyboard_interrupt(void)
 {
 	if (is_key_available())
-		keyboard_handler_main();
+		keyboard_handler();
 }
 
-
-void keyboard_handler_main(void) {
+/**
+ * Get a keycode from the port 0x60 and print on console the associated char
+ *
+ * @return void
+ */
+void keyboard_handler(void) {
 	unsigned char status;
 	unsigned char keycode;
 
@@ -64,7 +82,7 @@ void keyboard_handler_main(void) {
 	/* Check the keycode for non-printable char */
 	if (keycode == ENTER)
 	{
-		newline_on_screen();
+		newline_on_console();
 		return;
 	}
 	if (keycode == CAPSLOCK)

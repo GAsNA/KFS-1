@@ -1,5 +1,4 @@
 #include "kernel.h"
-#include "color.h"
 
 t_terminal terminal =	{
 				.vidptr = (char*)0xb8000,
@@ -11,19 +10,18 @@ t_terminal terminal =	{
 
 void main(void)
 {
-	blank_screen();
+	blank_console();
 
-	char *str = "42 - rleseur";
-	printk(str, BLUE);
-	newline_on_screen();
+	printk("42 - rleseur", BLUE);
+	newline_on_console();
 
-	newline_on_screen();
+	newline_on_console();
 
 	printk("You can write now:", GREEN);
-	newline_on_screen();
+	newline_on_console();
 
 	while(1)
-		simulate_kb_interrupt();
+		simulate_keyboard_interrupt();
 
 	return;
 }

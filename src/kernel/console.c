@@ -1,6 +1,11 @@
 #include "kernel.h"
 
-void blank_screen(void)
+/**
+ * Blank the entire console
+ *
+ * @return void
+ */
+void blank_console(void)
 {
 	unsigned int i = 0;
 
@@ -15,12 +20,24 @@ void blank_screen(void)
 	}
 }
 
-void newline_on_screen(void)
+/**
+ * Return add a newline on the console ('\n')
+ *
+ * @return void
+ */
+void newline_on_console(void)
 {
 	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
 	terminal.current_loc += line_size - terminal.current_loc % line_size;
 }
 
+/**
+ * Print a char on the console
+ *
+ * @param c char to display
+ * @param color color of the char to display
+ * @return void
+ */
 void printk_char(char c, int color)
 {
 	/* the character's ascii */
@@ -29,6 +46,13 @@ void printk_char(char c, int color)
 	terminal.vidptr[terminal.current_loc++] = color;
 }
 
+/**
+ * Print a string on the console
+ *
+ * @param str string to display
+ * @param color color of the str to display
+ * @return void
+ */
 void printk(char *str, int color)
 {
 	unsigned int i = 0;
@@ -38,6 +62,12 @@ void printk(char *str, int color)
 		printk_char(str[i++], color);
 }
 
+/**
+ * Calcul the number of digits in a number
+ *
+ * @param n the number
+ * @return number of digits
+ */
 static int nbrlen(int n)
 {
 	long	nb = n;
@@ -58,6 +88,12 @@ static int nbrlen(int n)
 	return (len);
 }
 
+/**
+ * Transform an int to a string
+ *
+ * @param n the number to transform
+ * @return the string of the number
+ */
 char *ft_itoa(int n)
 {
 	long	nb = n;
