@@ -40,6 +40,12 @@ void newline_on_console(void)
  */
 void printk_char(char c, int color)
 {
+	if (c == '\n')
+	{
+		newline_on_console();
+		return;
+	}
+
 	/* the character's ascii */
 	terminal.vidptr[terminal.current_loc++] = c;
 	/* attribute-byte: give character black bg and light grey fg */

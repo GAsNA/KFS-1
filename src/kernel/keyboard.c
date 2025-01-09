@@ -80,11 +80,6 @@ void keyboard_handler(void) {
 		return;
 		
 	/* Check the keycode for non-printable char */
-	if (keycode == ENTER)
-	{
-		newline_on_console();
-		return;
-	}
 	if (keycode == CAPSLOCK)
 	{
 		terminal.capslock = !terminal.capslock;
