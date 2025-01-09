@@ -62,7 +62,7 @@ void keyboard_handler(void) {
 		is_pressed = 0;
 	if (!is_pressed)
 		keycode -= 0x80;
-		
+
 	/* Check if keycode is valid and is shift */
 	if (keycode < 0)
 		return;

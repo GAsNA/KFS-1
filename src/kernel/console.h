@@ -8,7 +8,7 @@
 
 # define TAB_SIZE 4
 
-void blank_console(void);
+void clear_console(void);
 void newline_on_console(void);
 
 void printk_char(char c, int color);
