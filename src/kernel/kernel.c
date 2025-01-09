@@ -22,9 +22,6 @@ void main(void)
 	printk("You can write now:", GREEN);
 	newline_on_screen();
 
-	//idt_init();
-	kb_init();
-
 	while(1)
 		simulate_kb_interrupt();
 

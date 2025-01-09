@@ -1,14 +1,6 @@
 #include "kernel.h"
 #include "keyboard_map.h"
 
-struct IDT_entry IDT[IDT_SIZE];
-
-void kb_init(void)
-{
-	/* 0xFD is 11111101 - enables only IRQ1 (keyboard)*/
-	write_port(0x21 , 0xFD);
-}
-
 // Function from the sys/io.h file
 // Allows to read a byte of the content of an input/output port
 static __inline unsigned char inb (unsigned short int __port)
