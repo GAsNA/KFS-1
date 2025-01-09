@@ -3,7 +3,7 @@
 
 # include "color.h"
 # include "keyboard.h"
-# include "screen.h"
+# include "console.h"
 
 typedef struct s_terminal
 {
