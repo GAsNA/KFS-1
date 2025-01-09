@@ -95,7 +95,7 @@ make run-iso
 #### Hard way
 
 ```
-qemu-system-i386 -boot d -cdrom [your iso] -m 512
+qemu-system-i386 -cdrom [your iso]
 ```
 
 ## Resources
