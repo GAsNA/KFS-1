@@ -5,7 +5,7 @@ ISO_NAME = kfs-1.rleseur.iso
 BUILD_DIR = build/
 ISO_DIR = ${BUILD_DIR}iso/
 ISO_BOOT_DIR = ${ISO_DIR}boot/
-ISO_GRUB_DIR = ${ISO_BOOT_DIR}/grub/
+ISO_GRUB_DIR = ${ISO_BOOT_DIR}grub/
 SRC_DIR = src/
 
 BOOT_DIR = ${SRC_DIR}boot/
@@ -47,7 +47,7 @@ iso: all
 	${GRUB} -o ${ISO_NAME} ${ISO_DIR}
 
 run-iso: iso
-	${QEMU} -boot d -cdrom ${ISO_NAME} -m 512
+	${QEMU} -cdrom ${ISO_NAME}
 
 ${BUILD_DIR}%.o: ${BOOT_DIR}%.asm
 	mkdir -p ${BUILD_DIR}
