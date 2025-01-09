@@ -45,6 +45,22 @@ void printk_char(char c, int color)
 		newline_on_console();
 		return;
 	}
+	if (c == '\b')
+	{
+		if (terminal.current_loc - 2 >= 0)
+		{
+			terminal.vidptr[terminal.current_loc - 2] = '\0';
+			terminal.current_loc -= 2;
+		}
+		return;
+	}
+	if (c == '\t')
+	{
+		int i = 0;
+		while (i++ < TAB_SIZE)
+			printk_char(' ', color);
+		return;
+	}
 
 	/* the character's ascii */
 	terminal.vidptr[terminal.current_loc++] = c;

@@ -8,7 +8,7 @@
 typedef struct s_terminal
 {
 	char		*vidptr;
-	unsigned int	current_loc;
+	int		current_loc;
 	int		shift;
 	int		capslock;
 	int		numslock;
