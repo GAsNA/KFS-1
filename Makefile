@@ -13,7 +13,7 @@ KERNEL_DIR = ${SRC_DIR}kernel/
 LD_DIR = ${SRC_DIR}
 
 BOOT_FILES = boot.asm
-KERNEL_FILES = kernel.c keyboard.c console.c
+KERNEL_FILES = kernel.c keyboard.c console.c screen.c string.c
 LD_FILES = link.ld
 
 BOOT_SRC = ${addprefix ${BOOT_DIR}, ${BOOT_FILES}}

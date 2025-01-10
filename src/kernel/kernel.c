@@ -6,6 +6,7 @@ static t_screen init_screen(void)
 {
 	t_screen screen;
 
+	screen.buffer = "";
 	screen.current_loc = 0;
 	
 	return screen;
@@ -13,9 +14,13 @@ static t_screen init_screen(void)
 
 static void init_terminal(void)
 {
-	terminal.vidptr = (char*)0xb8000;
+	terminal.vidptr = (char*)BEGIN_VGA;
 	terminal.current_screen = 0;
-	terminal.screens[0] = init_screen();
+	
+	int i = 0;
+	while (i++ < LIMIT_NB_SCREENS)
+		terminal.screens[i] = init_screen();
+
 	terminal.current_loc = 0;
 	terminal.shift = 0;
 	terminal.capslock = 0;
@@ -28,13 +33,9 @@ void main(void)
 
 	clear_console();
 
-	printk("42 - rleseur", LIGHT_BLUE);
-	newline_on_console();
+	printk("42 - rleseur\n\n", LIGHT_BLUE);
 
-	newline_on_console();
-
-	printk("You can write now:", GREEN);
-	newline_on_console();
+	printk("You can write now:\n", GREEN);
 
 	while(1)
 		simulate_keyboard_interrupt();
