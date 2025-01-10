@@ -1,9 +1,7 @@
 #ifndef KERNEL_H
 # define KERNEL_H
 
-# include "color.h"
-# include "keyboard.h"
-# include "console.h"
+# define BEGIN_VGA 0xb8000
 
 # define LIMIT_NB_SCREENS 5
 
@@ -25,5 +23,11 @@ typedef struct s_terminal
 } t_terminal;
 
 extern t_terminal terminal;
+
+# include "color.h"
+# include "keyboard.h"
+# include "console.h"
+# include "screen.h"
+# include "string.h"
 
 #endif

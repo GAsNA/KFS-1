@@ -90,6 +90,16 @@ void keyboard_handler(void) {
 		terminal.numslock = !terminal.numslock;
 		return;
 	}
+	if (keycode == F1)
+	{
+		change_screen(terminal.current_screen + 1);
+		return;
+	}
+	if (keycode == F2)
+	{
+		change_screen(terminal.current_screen - 1);
+		return;
+	}
 
 	/* Selected the char given by inputs */
 	selected_key = keyboard_map[keycode];
