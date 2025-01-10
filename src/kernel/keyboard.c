@@ -92,12 +92,12 @@ void keyboard_handler(void) {
 	}
 	if (keycode == F1)
 	{
-		change_screen(terminal.current_screen + 1);
+		change_screen(terminal.current_screen - 1);
 		return;
 	}
 	if (keycode == F2)
 	{
-		change_screen(terminal.current_screen - 1);
+		change_screen(terminal.current_screen + 1);
 		return;
 	}
 
