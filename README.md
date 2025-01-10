@@ -5,10 +5,10 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 **Available options**:
 - Color support
 - Keyboard handler
-- Helper 'printk' (Not real printk)
 - Create Iso image from kernel binary
 
 **Missing options**:
+- Helper 'printk'
 - Scroll and cursor support
 - Different screens helper and keyboard shortcut
 
