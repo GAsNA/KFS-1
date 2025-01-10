@@ -1,22 +1,5 @@
 #include "kernel.h"
 
-//void add_to_console_buffer_at_pos(char c, int color, int *pos)
-//{
-//	terminal.vidptr[(*pos)++] = c;
-//	terminal.vidptr[(*pos)++] = color;
-//}
-
-//void add_to_console_and_screen_buffer_at_pos(char c, int color, int *pos)
-//{
-//	t_screen	*current_screen = &terminal.screens[terminal.current_screen];
-//
-//	add_to_screen_buffer_at_pos(c, color, current_screen, pos);
-//
-//	(*pos) -= 2;
-//
-//	add_to_console_buffer_at_pos(c, color, pos);
-//}
-
 /**
  * Blank the entire console
  *

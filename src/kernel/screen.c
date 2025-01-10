@@ -1,5 +1,11 @@
 #include "kernel.h"
 
+/**
+ * Add a char to current screen buffer
+ *
+ * @param c character to add to buffer
+ * @return void
+ */
 void add_to_current_screen_buffer(char c)
 {
 	t_screen	*screen = &terminal.screens[terminal.current_screen];
@@ -7,7 +13,7 @@ void add_to_current_screen_buffer(char c)
 	screen->buffer[screen->current_loc++] = c;
 }
 
-void write(char *str, int limit, int color)
+static void write(char *str, int limit, int color)
 {
 	unsigned int i = 0;
 	while(i < limit)
@@ -26,6 +32,12 @@ void write(char *str, int limit, int color)
 	}
 }
 
+/**
+ * Change the current visualized screen
+ *
+ * @param screen_number number of the screen to display
+ * @return void
+ */
 void change_screen(int screen_number)
 {
 	if (screen_number < 0 || screen_number >= LIMIT_NB_SCREENS)

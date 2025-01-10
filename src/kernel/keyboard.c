@@ -126,10 +126,7 @@ void keyboard_handler(void) {
 			selected_char = selected_key.small;
 	}
 	else
-	{
-	//	print_on_console(ft_itoa(keycode), MAGENTA);
 		return;
-	}
 
 	/* Write on terminal the selected char */
 	print_char_on_console(selected_char, LIGHT_GRAY);
