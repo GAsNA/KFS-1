@@ -21,6 +21,8 @@ static void write(char *str, int limit, int color)
 		char c = str[i];
 		if (c == '\n')
 			newline_on_console();
+		else if (c == '\b')
+			delete_on_console();		// TODO: char /b should not be on buffer
 		else if (c == '\t')
 			tab_on_console();
 		else
