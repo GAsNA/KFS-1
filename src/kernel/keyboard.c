@@ -127,10 +127,10 @@ void keyboard_handler(void) {
 	}
 	else
 	{
-	//	printk(ft_itoa(keycode), MAGENTA);
+	//	print_on_console(ft_itoa(keycode), MAGENTA);
 		return;
 	}
 
 	/* Write on terminal the selected char */
-	printk_char(selected_char, LIGHT_GRAY);
+	print_char_on_console(selected_char, LIGHT_GRAY);
 }

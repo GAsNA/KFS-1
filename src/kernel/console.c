@@ -70,7 +70,7 @@ void tab_on_console(void)
 {
 	int i = 0;
 	while (i++ < TAB_SIZE)
-		printk_char(' ', LIGHT_GRAY);
+		print_char_on_console(' ', LIGHT_GRAY);
 }
 
 /**
@@ -80,7 +80,7 @@ void tab_on_console(void)
  * @param color color of the char to display
  * @return void
  */
-void printk_char(char c, int color)
+void print_char_on_console(char c, int color)
 {
 	add_to_current_screen_buffer(c);
 
@@ -111,11 +111,11 @@ void printk_char(char c, int color)
  * @param color color of the str to display
  * @return void
  */
-void printk(char *str, int color)
+void print_on_console(char *str, int color)
 {
 	unsigned int i = 0;
 
 	/* this loop writes the string to video memory */
 	while(str[i] != '\0')
-		printk_char(str[i++], color);
+		print_char_on_console(str[i++], color);
 }

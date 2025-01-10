@@ -33,9 +33,9 @@ void main(void)
 
 	clear_console();
 
-	printk("42 - rleseur\n\n", LIGHT_BLUE);
+	print_on_console("42 - rleseur\n\n", LIGHT_BLUE);
 
-	printk("You can write now:\n", GREEN);
+	print_on_console("You can write now:\n", GREEN);
 
 	while(1)
 		simulate_keyboard_interrupt();
