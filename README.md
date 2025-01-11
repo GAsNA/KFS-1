@@ -3,12 +3,12 @@
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
 **Options**:
-[x] Color support
-[x] Keyboard handler
-[ ] Helper 'printk'
-[ ]Scroll and cursor support
-[x] Different screens helper and keyboard shortcut
-[x] Create Iso image from kernel binary
+- [x] Color support
+- [x] Keyboard handler
+- [ ] Helper 'printk'
+- [ ] Scroll and cursor support
+- [x] Different screens helper and keyboard shortcut
+- [x] Create Iso image from kernel binary
 
 **TODO**:
 - Control deletion on terminal (keep in memory the last char that can be deleted)
