@@ -14,7 +14,7 @@ void clear_console(void)
 	 * each element takes 2 bytes */
 	while(i < SCREENSIZE)
 	{
-		terminal.vidptr[i++] = ' ';
+		terminal.vidptr[i++] = '\0';
 		terminal.vidptr[i++] = LIGHT_GRAY;
 	}
 }
@@ -65,7 +65,7 @@ void tab_on_console(void)
  */
 void print_char_on_console(char c, int color)
 {
-	add_to_current_screen_buffer(c);
+	add_char_to_current_screen_buffer(c);
 
 	if (c == '\n')
 	{

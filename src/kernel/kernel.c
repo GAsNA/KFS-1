@@ -6,7 +6,7 @@ static t_screen init_screen(void)
 {
 	t_screen screen;
 
-	screen.buffer = "";
+	screen.buffer[0] = '\0';
 	screen.current_loc = 0;
 	
 	return screen;
@@ -19,7 +19,10 @@ static void init_terminal(void)
 	
 	int i = 0;
 	while (i++ < LIMIT_NB_SCREENS)
+	{
 		terminal.screens[i] = init_screen();
+		//add_str_to_screen()
+	}
 
 	terminal.current_loc = 0;
 	terminal.shift = 0;

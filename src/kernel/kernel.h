@@ -7,7 +7,7 @@
 
 typedef struct s_screen
 {
-	char	*buffer;
+	char	buffer[80 * 25 * 2];
 	int	current_loc;
 } t_screen;
 
