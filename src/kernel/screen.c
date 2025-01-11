@@ -1,16 +1,54 @@
 #include "kernel.h"
 
+static void write(char *str, int limit, int color);
+
+/**
+ * Add a char to choose screen buffer
+ *
+ * @param c character to add to buffer
+ * @param screen screen to which to add to buffer
+ * @return void
+ */
+void add_char_to_screen_buffer(char c, int nb_screen)
+{
+	terminal.screens[nb_screen]
+		.buffer[terminal.screens[nb_screen].current_loc++] = c;
+}
+
+/**
+ * Add a str to choose screen buffer
+ *
+ * @param str string to add to buffer
+ * @param screen screen to which to add to buffer
+ * @return void
+ */
+void add_str_to_screen_buffer(char *str, int nb_screen)
+{
+	int i = 0;
+	while (str[i] != '\0')
+		add_char_to_screen_buffer(str[i++], nb_screen);
+}
+
 /**
  * Add a char to current screen buffer
  *
  * @param c character to add to buffer
  * @return void
  */
-void add_to_current_screen_buffer(char c)
+void add_char_to_current_screen_buffer(char c)
 {
-	t_screen	*screen = &terminal.screens[terminal.current_screen];
+	add_char_to_screen_buffer(c, terminal.current_screen);
+}
 
-	screen->buffer[screen->current_loc++] = c;
+/**
+ * Add a str to current screen buffer
+ *
+ * @param str string to add to buffer
+ * @return void
+ */
+void add_str_to_current_screen_buffer(char *str)
+{
+	add_str_to_screen_buffer(str, terminal.current_screen);
 }
 
 static void write(char *str, int limit, int color)
@@ -47,7 +85,6 @@ void change_screen(int screen_number)
 
 	clear_console();
 	
-	terminal.vidptr = (char *)BEGIN_VGA;
 	terminal.current_loc = 0;
 	terminal.current_screen = screen_number;
 	
