@@ -3,11 +3,18 @@
 
 # define BEGIN_VGA 0xb8000
 
+# define NB_LINES 25
+# define NB_COLUMNS 80
+# define BYTES_FOR_ELEMENT 2
+# define SCREENSIZE BYTES_FOR_ELEMENT * NB_COLUMNS * NB_LINES
+
+# define TAB_SIZE 4
+
 # define LIMIT_NB_SCREENS 5
 
 typedef struct s_screen
 {
-	char	buffer[80 * 25 * 2];
+	char	buffer[SCREENSIZE];
 	int	current_loc;
 } t_screen;
 
