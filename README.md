@@ -11,6 +11,8 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - [x] Create Iso image from kernel binary
 
 **TODO**:
+- Clean code for .h please
+- Store files in different folders (in src/kernel)
 - Control deletion on terminal (keep in memory the last char that can be deleted)
 
 *NB: you can use the dependencies.txt to install all necessaries packages. ``sudo apt/dnf install $(cat dependencies.txt)``*
