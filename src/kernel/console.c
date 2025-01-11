@@ -65,23 +65,27 @@ void tab_on_console(void)
  */
 void print_char_on_console(char c, int color)
 {
-	add_char_to_current_screen_buffer(c);
 
 	if (c == '\n')
 	{
+		add_char_to_current_screen_buffer(c, color);
 		newline_on_console();
 		return;
 	}
 	if (c == '\b')
 	{
+		delete_on_screen(terminal.current_screen);
 		delete_on_console();
 		return;
 	}
 	if (c == '\t')
 	{
+		add_char_to_current_screen_buffer(c, color);
 		tab_on_console();
 		return;
 	}
+	
+	add_char_to_current_screen_buffer(c, color);
 	
 	terminal.vidptr[terminal.current_loc++] = c;
 	terminal.vidptr[terminal.current_loc++] = color;
