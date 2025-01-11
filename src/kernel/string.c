@@ -56,3 +56,25 @@ char *ft_itoa(int n)
 	str[len] = '\0';
 	return (str);
 }
+
+/**
+ * Copy n bytes from src memory to dest memory
+ *
+ * @param dest memory to which the bytes are copied
+ * @param src memory from which the bytes are copied
+ * @param n number of bytes to copy
+ * @return pointer to dest memory
+ */
+void *memcpy(void *dest, const void *src, int n)
+{
+	int i;
+
+	if (!dest && !src)
+		return 0;
+
+	i = -1;
+	while (++i < n)
+		((unsigned char *) dest)[i] = ((unsigned char *) src)[i];
+
+	return dest;
+}
