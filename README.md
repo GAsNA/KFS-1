@@ -2,15 +2,16 @@
 
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
-**Available options**:
-- Color support
-- Keyboard handler
-- Create Iso image from kernel binary
+**Options**:
+[x] Color support
+[x] Keyboard handler
+[ ] Helper 'printk'
+[ ]Scroll and cursor support
+[x] Different screens helper and keyboard shortcut
+[x] Create Iso image from kernel binary
 
-**Missing options**:
-- Helper 'printk'
-- Scroll and cursor support
-- Different screens helper and keyboard shortcut
+**TODO**:
+- Control deletion on terminal (keep in memory the last char that can be deleted)
 
 *NB: you can use the dependencies.txt to install all necessaries packages. ``sudo apt/dnf install $(cat dependencies.txt)``*
 
