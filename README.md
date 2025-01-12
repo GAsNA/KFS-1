@@ -10,7 +10,12 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - [x] Different screens helper and keyboard shortcut
 - [x] Create Iso image from kernel binary
 
+**Shortcuts**:
+- <ins>F1</ins>: go to previous screen
+- <ins>F2</ins>: go to next screen
+
 **TODO**:
+- Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)
 - Control deletion on terminal (keep in memory the last char that can be deleted)
