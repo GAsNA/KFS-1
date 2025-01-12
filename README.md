@@ -11,8 +11,8 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - [x] Create Iso image from kernel binary
 
 **Shortcuts**:
-- <ins>F1</ins>: go to previous screen
-- <ins>F2</ins>: go to next screen
+- **F1**: go to previous screen
+- **F2**: go to next screen
 
 **TODO**:
 - Fix deletion for \n and \t
@@ -116,4 +116,4 @@ qemu-system-i386 -cdrom [your iso]
 
 - For keyboard scancodes: https://aeb.win.tue.nl/linux/kbd/scancodes-1.html
 
-- For color and build iso image: https://theogill.medium.com/creating-a-kernel-from-scratch-1a1aa569780f
+- For another system of keyboard, color and build iso image: https://theogill.medium.com/creating-a-kernel-from-scratch-1a1aa569780f
