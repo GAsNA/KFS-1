@@ -36,5 +36,6 @@ extern t_terminal terminal;
 # include "console.h"
 # include "screen.h"
 # include "string.h"
+# include "printk.h"
 
 #endif
