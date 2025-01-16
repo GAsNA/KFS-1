@@ -12,6 +12,6 @@
 # define KERN_DEFAULT ""	// LIGHT_GRAY
 # define KERN_CONT "<c>"	// LIGHT_GRAY
 
-void printk(const char *fmt, ...);
+void printk(char *fmt, ...);
 
 #endif

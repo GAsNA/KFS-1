@@ -1,4 +1,6 @@
 #include "kernel.h"
+#include <stddef.h>
+#include <stdarg.h>
 
 /**
  * Calcul the number of digits in a number
@@ -32,7 +34,7 @@ static int nbrlen(int n)
  * @param n the number to transform
  * @return the string of the number
  */
-char *ft_itoa(int n)
+char *itoa(int n)
 {
 	long	nb = n;
 	int	len = nbrlen(nb), i;
@@ -99,7 +101,66 @@ int strncmp(char *s1, char *s2, unsigned int n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-static void display_str(const char *str, va_list args)
+void	putaddr(int num, int color)
+{
+	char str[255];
+	int i;
+
+	if (!num)
+		return (print_on_console("0x0", color));
+	i = 0;
+	while (num > 0)
+	{
+		str[i] = ("0123456789abcdef"[num % 16]);
+		num = num / 16;
+		i++;
+	}
+	print_on_console("0x", color);
+	i--;
+	while (i >= 0)
+	{
+		print_char_on_console(str[i], color);
+		i--;
+	}
+}
+
+void puthexa(int nb, char *hexa, int color)
+{
+	long	n;
+
+	n = nb;
+	if (n < 0)
+		n += 4294967296;
+	if (n >= 16)
+	{
+		puthexa(n / 16, hexa, color);
+		print_char_on_console(hexa[n % 16], color);
+	}
+	else
+		print_char_on_console(hexa[n], color);
+}
+
+static void display_arg(const char *str, int i, int color, va_list args)
+{
+	if (str[i] == 'c')
+		print_char_on_console(va_arg(args, int), color);
+	else if (str[i] == 's')
+		print_on_console(va_arg(args, char *), color);
+	else if (str[i] == 'p')
+		putaddr((size_t)va_arg(args, char *), color);
+	else if (str[i] == 'i' || str[i] == 'd')
+		print_on_console(itoa(va_arg(args, int)), color);
+	else if (str[i] == 'u')
+		print_on_console(itoa((unsigned int)va_arg(args, int)), color);
+	else if (str[i] == 'x')
+		puthexa(va_arg(args, int), "0123456789abcdef", color);
+	else if (str[i] == 'X')
+		puthexa(va_arg(args, int), "0123456789ABCDEF", color);
+	else if (str[i] == '%')
+		print_char_on_console('%', color);
+}
+
+static void display_str(const char *str, int color, va_list args)
 {
 	int i = 0;
 
@@ -108,32 +169,12 @@ static void display_str(const char *str, va_list args)
 		if (str[i] == '%')
 		{
 			i++;
-			display_arg(str, i, args);
+			display_arg(str, i, color, args);
 		}
 		else
-			//putchar(str[i]);
+			print_char_on_console(str[i], color);
 		i++;
 	}
-}
-
-static void display_arg(const char *str, int i, va_list args)
-{
-	if (str[i] == 'c')
-		putchar(va_arg(args, int));
-	else if (str[i] == 's')
-		putstr(va_arg(args, char *));
-	else if (str[i] == 'p')
-		putaddr((size_t)va_arg(args, char *));
-	else if (str[i] == 'i' || s[i] == 'd')
-		putnbr(va_arg(args, int));
-	else if (str[i] == 'u')
-		putnbru((unsigned int)va_arg(args, int));
-	else if (str[i] == 'x')
-		puthexa(va_arg(args, int), "0123456789abcdef");
-	else if (str[i] == 'X')
-		puthexa(va_arg(args, int), "0123456789ABCDEF");
-	else if (str[i] == '%')
-		putchar('%');
 }
 
 /**
@@ -142,14 +183,11 @@ static void display_arg(const char *str, int i, va_list args)
  * @param str string to interpret with other args
  * @return the number of charater printed
  */
-void printf(const char *str, ...)
+void printf(const char *str, int color, ...)
 {
 	va_list	args;
-	int count;
 
-	va_start(args, str);
-	display_str(str, args);
+	va_start(args, color);
+	display_str(str, color, args);
 	va_end(args);
 }
-
-

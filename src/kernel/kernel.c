@@ -40,7 +40,7 @@ void main(void)
 
 	print_on_console("You can write now:\n", GREEN);
 
-	printk(KERN_INFO "Ceci est un test de printk");
+	printk(KERN_ERR "Ceci est un test de printk\n");
 
 	while(1)
 		simulate_keyboard_interrupt();
