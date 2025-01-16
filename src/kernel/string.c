@@ -78,3 +78,78 @@ void *memcpy(void *dest, const void *src, int n)
 
 	return dest;
 }
+
+/**
+ * Compare n bytes from two strings
+ *
+ * @param s1 first string to compare
+ * @param s2 second string to compare
+ * @param n the number of bytes to compare
+ * @return the difference between the first different characters
+ */
+int strncmp(char *s1, char *s2, unsigned int n)
+{
+	unsigned int	i;
+
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+static void display_str(const char *str, va_list args)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == '%')
+		{
+			i++;
+			display_arg(str, i, args);
+		}
+		else
+			//putchar(str[i]);
+		i++;
+	}
+}
+
+static void display_arg(const char *str, int i, va_list args)
+{
+	if (str[i] == 'c')
+		putchar(va_arg(args, int));
+	else if (str[i] == 's')
+		putstr(va_arg(args, char *));
+	else if (str[i] == 'p')
+		putaddr((size_t)va_arg(args, char *));
+	else if (str[i] == 'i' || s[i] == 'd')
+		putnbr(va_arg(args, int));
+	else if (str[i] == 'u')
+		putnbru((unsigned int)va_arg(args, int));
+	else if (str[i] == 'x')
+		puthexa(va_arg(args, int), "0123456789abcdef");
+	else if (str[i] == 'X')
+		puthexa(va_arg(args, int), "0123456789ABCDEF");
+	else if (str[i] == '%')
+		putchar('%');
+}
+
+/**
+ * Print an interpreted string
+ *
+ * @param str string to interpret with other args
+ * @return the number of charater printed
+ */
+void printf(const char *str, ...)
+{
+	va_list	args;
+	int count;
+
+	va_start(args, str);
+	display_str(str, args);
+	va_end(args);
+}
+
+
