@@ -140,36 +140,42 @@ void puthexa(int nb, char *hexa, int color)
 		print_char_on_console(hexa[n], color);
 }
 
-static void display_arg(const char *str, int i, int color, va_list args)
+static void display_arg(const char *str, int i, int color, ...)
 {
+	void **args = (void **) &color;
+	args++;
+
 	if (str[i] == 'c')
-		print_char_on_console(va_arg(args, int), color);
+		print_char_on_console((char)*(char *)(args), color);
 	else if (str[i] == 's')
-		print_on_console(va_arg(args, char *), color);
+		print_on_console(*(char **)(args), color);
 	else if (str[i] == 'p')
-		putaddr((size_t)va_arg(args, char *), color);
+		putaddr((unsigned int)*(char **)(args), color);
 	else if (str[i] == 'i' || str[i] == 'd')
-		print_on_console(itoa(va_arg(args, int)), color);
+		print_on_console(itoa((int)*(int **)(args)), color);
 	else if (str[i] == 'u')
-		print_on_console(itoa((unsigned int)va_arg(args, int)), color);
+		print_on_console(itoa((unsigned int)*(int **)(args)), color);
 	else if (str[i] == 'x')
-		puthexa(va_arg(args, int), "0123456789abcdef", color);
+		puthexa((int)*(int **)(args), "0123456789abcdef", color);
 	else if (str[i] == 'X')
-		puthexa(va_arg(args, int), "0123456789ABCDEF", color);
+		puthexa((int)*(int **)(args), "0123456789ABCDEF", color);
 	else if (str[i] == '%')
 		print_char_on_console('%', color);
 }
 
-static void display_str(const char *str, int color, va_list args)
+static void display_str(const char *str, int color, ...)
 {
 	int i = 0;
+	void **args = (void **) &color;
+	args++;
 
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
 			i++;
-			display_arg(str, i, color, args);
+			display_arg(str, i, color, *args);
+			args++;
 		}
 		else
 			print_char_on_console(str[i], color);
@@ -185,9 +191,9 @@ static void display_str(const char *str, int color, va_list args)
  */
 void printf(const char *str, int color, ...)
 {
-	va_list	args;
+	void **args = (void **) &color;
+	args++;
 
-	va_start(args, color);
-	display_str(str, color, args);
-	va_end(args);
+	print_on_console(*(char **)(args), color);
+	//display_str(str, color, *args);
 }
