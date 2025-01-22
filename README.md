@@ -15,6 +15,7 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - **F2**: go to next screen
 
 **TODO**:
+- Constitancy name console/terminal: rename to terminal
 - Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)
@@ -117,3 +118,5 @@ qemu-system-i386 -cdrom [your iso]
 - For keyboard scancodes: https://aeb.win.tue.nl/linux/kbd/scancodes-1.html
 
 - For another system of keyboard, color and build iso image: https://theogill.medium.com/creating-a-kernel-from-scratch-1a1aa569780f
+
+- To move the cursor: https://hasinisama.medium.com/building-your-own-operating-system-drivers-8adfc889398b
