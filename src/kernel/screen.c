@@ -94,6 +94,8 @@ void change_screen(int screen_number)
 
 	//memcpy(terminal.vidptr, terminal.screens[screen_number].buffer, SCREENSIZE);
 	copy_buffer_screen_to_console(screen_number);
+
+	fb_move_cursor(terminal.current_loc / 2);
 	
 	//write("SCREEN N.", 9, MAGENTA);
 	//write(ft_itoa(screen_number), 1, MAGENTA);
@@ -111,6 +113,6 @@ void delete_on_screen(int nb_screen)
 	if (terminal.screens[nb_screen].current_loc - 2 >= 0)
 	{
 		terminal.screens[nb_screen].buffer[terminal.screens[nb_screen].current_loc - 2] = '\0';
-		terminal.screens[nb_screen].current_loc -= 2;
+		terminal.screens[nb_screen].current_loc -= 2;	
 	}
 }

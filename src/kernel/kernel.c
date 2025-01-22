@@ -41,7 +41,7 @@ void main(void)
 
 	print_on_console("You can write now:\n", GREEN);
 
-	fb_move_cursor(5);
+	//fb_move_cursor(5);
 
 	while(1)
 		simulate_keyboard_interrupt();
