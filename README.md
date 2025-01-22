@@ -21,6 +21,7 @@ Is based on a i386 (x86) architecture.
 - **F2**: go to next screen
 
 **TODO**:
+- Fix keyboard for arrows and other scancode
 - Constitancy name console/terminal: rename to terminal
 - Fix deletion for \n and \t
 - Clean code for .h please
