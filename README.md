@@ -6,6 +6,8 @@ This project is the first in a serie of 10 projects, introducing into the Kernel
 
 Is based on a i386 (x86) architecture.
 
+![](https://github.com/GAsNA/KFS-1/blob/scroll_cursor_support/images/presentation_kfs-1_rleseur.gif)
+
 **Options**:
 - [x] Color support
 - [x] Keyboard handler
