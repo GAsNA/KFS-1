@@ -40,7 +40,11 @@ void main(void)
 
 	print_on_console("You can write now:\n", GREEN);
 
-	printk(KERN_ERR "Ceci est un test de printk\n");
+	//printk(KERN_ERR "Ceci est un test ERR de printk\n");
+	//printk(KERN_DEFAULT "Ceci est un test DEFAULT de printk\n");
+	//printk(KERN_WARNING "Ceci est un test WARNING de printk: %s, %i, %d, %x, %c, %%\n", "ARGS", 42, 42 * 2, 42, 'B');
+	//printk("TEST ARGS: %c, %c\n", 'b', 'c');
+	printk("TEST: %s, %s\n", "ARGS", "EHEH");
 
 	while(1)
 		simulate_keyboard_interrupt();
