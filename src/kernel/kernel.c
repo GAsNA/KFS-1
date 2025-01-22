@@ -19,10 +19,7 @@ static void init_terminal(void)
 	
 	int i = 0;
 	while (i++ < LIMIT_NB_SCREENS)
-	{
 		terminal.screens[i] = init_screen();
-		//add_str_to_screen()
-	}
 
 	terminal.current_loc = 0;
 	terminal.shift = 0;
@@ -38,13 +35,11 @@ void main(void)
 
 	print_on_console("42 - rleseur\n\n", LIGHT_BLUE);
 
-	print_on_console("You can write now:\n", GREEN);
+	printk(KERN_ERR "Ceci est un test ERR de printk.\n");
+	printk(KERN_DEFAULT "Ceci est un test DEFAULT de printk.\n");
+	printk(KERN_WARNING "Ceci est un test WARNING de printk.\n\n");
 
-	//printk(KERN_ERR "Ceci est un test ERR de printk\n");
-	//printk(KERN_DEFAULT "Ceci est un test DEFAULT de printk\n");
-	//printk(KERN_WARNING "Ceci est un test WARNING de printk: %s, %i, %d, %x, %c, %%\n", "ARGS", 42, 42 * 2, 42, 'B');
-	//printk("TEST ARGS: %c, %c\n", 'b', 'c');
-	printk("TEST: %s, %s\n", "ARGS", "EHEH");
+	print_on_console("You can write now:\n", GREEN);
 
 	while(1)
 		simulate_keyboard_interrupt();

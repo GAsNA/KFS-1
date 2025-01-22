@@ -1,75 +1,120 @@
 #include "kernel.h"
 
+/**
+ * Print the arguments given for printk
+ *
+ * @param c the character that represents the type of value to display
+ * @param color the color to use to print
+ * @return void
+ */
+static void print_arg(char c, void **arg, int color)
+{
+	if (c == 'c')
+		print_char_on_console((char)*(char *)(arg), color);
+	else if (c == 's')
+		print_on_console(*(char **)(arg), color);
+	else if (c == 'p')
+		putaddr((unsigned int)*(char **)(arg), color);
+	else if (c == 'i' || c == 'd')
+		print_on_console(itoa((int)*(int **)(arg)), color);
+	else if (c == 'u')
+		print_on_console(itoa((unsigned int)*(int **)(arg)), color);
+	else if (c == 'x')
+		puthexa_small((int)*(int **)(arg), color);
+	else if (c == 'X')
+		puthexa_capital((int)*(int **)(arg), color);
+	else if (c == '%')
+		print_char_on_console('%', color);
+}
+
+/**
+ * Print messages with a log level to the kernel
+ *
+ * @param fmt format string to print
+ * @return void
+ */
 void printk(char *fmt, ...)
 {
+	int i = 0;
 	int color = LIGHT_GRAY;
 	void **args = (void **) &fmt;
-
 	args++;
 
 	if (!fmt)
 		return;
-/*
+
+	// Print the header and choose color
 	if (strncmp(fmt, KERN_EMERG, 3) == 0)
 	{
 		color = RED;
-		printf("<emerg> ", color);
+		print_on_console("<emerg> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_ALERT, 3) == 0)
 	{
 		color = RED;
-		printf("<alert> ", color);
+		print_on_console("<alert> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_CRIT, 3) == 0)
 	{
 		color = RED;
-		printf("<crit> ", color);
+		print_on_console("<crit> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_ERR, 3) == 0)
 	{
 		color = RED;
-		printf("<err> ", color);
+		print_on_console("<err> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_WARNING, 3) == 0)
 	{
 		color = YELLOW;
-		printf("<warn> ", color);
+		print_on_console("<warn> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_NOTICE, 3) == 0)
 	{
 		color = MAGENTA;
-		printf("<notice> ", color);
+		print_on_console("<notice> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_INFO, 3) == 0)
 	{
 		color = LIGHT_GRAY;
-		printf("<info> ", color);
+		print_on_console("<info> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_DEBUG, 3) == 0)
 	{
 		color = LIGHT_GRAY;
-		printf("<debug> ", color);
+		print_on_console("<debug> ", color);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_CONT, 3) == 0)
 	{
 		color = LIGHT_GRAY;
-		printf("<cont> ", color);
+		print_on_console("<cont> ", color);
 		fmt = fmt + 3;
 	}
 	else
 	{
 		color = LIGHT_GRAY;
-		printf("<default> ", color);
+		print_on_console("<default> ", color);
 	}
-*/
-	//print_on_console(*(char **)(args), color);
-	printf(fmt, color, *args);
+	
+	// Interpret the string
+	while (fmt[i])
+	{
+		if (fmt[i] == '%')
+		{
+			i++;
+			print_arg(fmt[i], args, color);
+			args++;
+		}
+		else
+			print_char_on_console(fmt[i], color);
+		i++;
+	}
 }
