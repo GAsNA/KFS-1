@@ -101,7 +101,14 @@ int strncmp(char *s1, char *s2, unsigned int n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	putaddr(int num, int color)
+/**
+ * Print a memory address in hexa
+ *
+ * @param num the value to which the address belongs
+ * @param color the color to use to print
+ * @return void
+ */
+void putaddr(int num, int color)
 {
 	char str[255];
 	int i;
@@ -124,8 +131,16 @@ void	putaddr(int num, int color)
 	}
 }
 
-void puthexa(int nb, char *hexa, int color)
+/**
+ * Print a value in hexa in small characters
+ *
+ * @param nb the value to convert and print
+ * @param color the color to use to print
+ * @return void
+ */
+void puthexa_small(int nb, int color)
 {
+	char *hexa = "0123456789abcdef";
 	long	n;
 
 	n = nb;
@@ -133,67 +148,33 @@ void puthexa(int nb, char *hexa, int color)
 		n += 4294967296;
 	if (n >= 16)
 	{
-		puthexa(n / 16, hexa, color);
+		puthexa_small(n / 16, color);
 		print_char_on_console(hexa[n % 16], color);
 	}
 	else
 		print_char_on_console(hexa[n], color);
 }
 
-static void display_arg(const char *str, int i, int color, ...)
-{
-	void **args = (void **) &color;
-	args++;
-
-	if (str[i] == 'c')
-		print_char_on_console((char)*(char *)(args), color);
-	else if (str[i] == 's')
-		print_on_console(*(char **)(args), color);
-	else if (str[i] == 'p')
-		putaddr((unsigned int)*(char **)(args), color);
-	else if (str[i] == 'i' || str[i] == 'd')
-		print_on_console(itoa((int)*(int **)(args)), color);
-	else if (str[i] == 'u')
-		print_on_console(itoa((unsigned int)*(int **)(args)), color);
-	else if (str[i] == 'x')
-		puthexa((int)*(int **)(args), "0123456789abcdef", color);
-	else if (str[i] == 'X')
-		puthexa((int)*(int **)(args), "0123456789ABCDEF", color);
-	else if (str[i] == '%')
-		print_char_on_console('%', color);
-}
-
-static void display_str(const char *str, int color, ...)
-{
-	int i = 0;
-	void **args = (void **) &color;
-	args++;
-
-	while (str[i])
-	{
-		if (str[i] == '%')
-		{
-			i++;
-			display_arg(str, i, color, *args);
-			args++;
-		}
-		else
-			print_char_on_console(str[i], color);
-		i++;
-	}
-}
-
 /**
- * Print an interpreted string
+ * Print a value in hexa in capital characters
  *
- * @param str string to interpret with other args
- * @return the number of charater printed
+ * @param nb the value to convert and print
+ * @param color the color to use to print
+ * @return void
  */
-void printf(const char *str, int color, ...)
+void puthexa_capital(int nb, int color)
 {
-	void **args = (void **) &color;
-	args++;
+	char *hexa = "0123456789ABCDEF";
+	long	n;
 
-	print_on_console(*(char **)(args), color);
-	//display_str(str, color, *args);
+	n = nb;
+	if (n < 0)
+		n += 4294967296;
+	if (n >= 16)
+	{
+		puthexa_capital(n / 16, color);
+		print_char_on_console(hexa[n % 16], color);
+	}
+	else
+		print_char_on_console(hexa[n], color);
 }
