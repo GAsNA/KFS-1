@@ -6,7 +6,6 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - [x] Color support
 - [x] Keyboard handler
 - [x] Helper 'printk'
-- [x] Helper 'printf'
 - [ ] Scroll and cursor support
 - [x] Different screens helper and keyboard shortcut
 - [x] Create Iso image from kernel binary
@@ -16,7 +15,6 @@ Discover the world of "Kernel Programming" and learn how to create your very own
 - **F2**: go to next screen
 
 **TODO**:
-- Rework printk
 - Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)
