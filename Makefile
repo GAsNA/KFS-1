@@ -13,7 +13,7 @@ KERNEL_DIR = ${SRC_DIR}kernel/
 LD_DIR = ${SRC_DIR}
 
 BOOT_FILES = boot.asm
-KERNEL_FILES = kernel.c keyboard.c terminal.c screen.c string.c printk.c io.c
+KERNEL_FILES = kernel.c keyboard.c terminal.c screen.c string.c printk.c cursor.c
 LD_FILES = link.ld
 
 BOOT_SRC = ${addprefix ${BOOT_DIR}, ${BOOT_FILES}}
@@ -26,7 +26,7 @@ BUILD_OBJS = ${addprefix ${BUILD_DIR}, ${OBJS}}
 AS = nasm
 CC = gcc
 LD = ld
-GRUB = grub2-mkrescue
+GRUB = grub-mkrescue
 QEMU = qemu-system-i386
 
 AS_FLAGS = -f elf32

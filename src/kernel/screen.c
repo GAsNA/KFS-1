@@ -95,7 +95,7 @@ void change_screen(int screen_number)
 	//memcpy(terminal.vidptr, terminal.screens[screen_number].buffer, SCREENSIZE);
 	copy_buffer_screen_to_terminal(screen_number);
 
-	fb_move_cursor(terminal.current_loc / 2);
+	move_cursor(terminal.current_loc / 2);
 	
 	//write("SCREEN N.", 9, MAGENTA);
 	//write(ft_itoa(screen_number), 1, MAGENTA);
