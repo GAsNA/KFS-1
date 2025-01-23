@@ -1,5 +1,9 @@
 # KFS-1
 
+<img alt="Static Badge" width="250" src="https://img.shields.io/badge/%2F!%5C-In%20Progress-%23cf0c0c">
+
+<br/>
+
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
 This project is the first in a serie of 10 projects, introducing into the Kernel world. This first project is a very basic kernel with some features.
