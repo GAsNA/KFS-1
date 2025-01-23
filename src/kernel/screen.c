@@ -105,14 +105,35 @@ void change_screen(int screen_number)
 /**
  * Delete a char on a screen ('\b')
  *
- * @param nb_screen number of the screen
+ * @param screen_number number of the screen
  * @return void
  */
-void delete_on_screen(int nb_screen)
+void delete_on_screen(int screen_number)
 {
-	if (terminal.screens[nb_screen].current_loc - 2 >= 0)
+	if (terminal.screens[screen_number].current_loc - 2 >= 0)
 	{
-		terminal.screens[nb_screen].buffer[terminal.screens[nb_screen].current_loc - 2] = '\0';
-		terminal.screens[nb_screen].current_loc -= 2;	
+		terminal.screens[screen_number].buffer[terminal.screens[screen_number].current_loc - 2] = '\0';
+		terminal.screens[screen_number].current_loc -= 2;
 	}
+
+	move_buffer_screen_to_left(screen_number);	
+}
+
+/**
+ * Move the buffer to the left of one char on deletion of a char
+ *
+ * @param screen_number number of the screen
+ * @return void
+ */
+void move_buffer_screen_to_left(int screen_number)
+{
+	int i = terminal.screens[screen_number].current_loc;
+
+	while (terminal.screens[screen_number].buffer[i + 2] != '\0')
+	{
+		terminal.screens[screen_number].buffer[i] = terminal.screens[screen_number].buffer[i + 2];
+		terminal.screens[screen_number].buffer[i + 1] = terminal.screens[screen_number].buffer[i + 3];
+		i += 2;
+	}
+	terminal.screens[screen_number].buffer[i] = '\0';
 }

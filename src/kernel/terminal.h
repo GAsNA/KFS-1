@@ -6,6 +6,8 @@ void newline_on_terminal(void);
 void delete_on_terminal(void);
 void tab_on_terminal(void);
 
+void move_buffer_terminal_to_left(void);
+
 void print_char_on_terminal(char c, int color);
 void print_on_terminal(char *str, int color);
 
