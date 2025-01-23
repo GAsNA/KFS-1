@@ -1,4 +1,4 @@
-#include "io.h"
+#include "cursor.h"
 
 /**
  * Moves the cursor of the framebuffer to the given position
