@@ -10,7 +10,7 @@ This project is the first in a serie of 10 projects, introducing into the Kernel
 
 Is based on a i386 (x86) architecture.
 
-![](images/presentation_kfs-1_rleseur.gif)
+![](images/preview_kfs-1_rleseur.gif)
 
 **Options**:
 - [x] Color support
