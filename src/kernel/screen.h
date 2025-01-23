@@ -1,6 +1,8 @@
 #ifndef SCREEN_H
 # define SCREEN_H
 
+t_screen init_screen(void);
+
 void add_char_to_screen_buffer(char c, int color, int nb_screen);
 void add_str_to_screen_buffer(char *c, int color, int nb_screen);
 void add_char_to_current_screen_buffer(char c, int color);

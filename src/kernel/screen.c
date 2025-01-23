@@ -1,6 +1,21 @@
 #include "kernel.h"
 
 /**
+ * Initialize a screen and return it
+ *
+ * @return an initialized screen
+ */
+t_screen init_screen(void)
+{
+	t_screen screen;
+
+	screen.buffer[0] = '\0';
+	screen.current_loc = 0;
+	
+	return screen;
+}
+
+/**
  * Add a char to choose screen buffer
  *
  * @param c character to add to buffer
