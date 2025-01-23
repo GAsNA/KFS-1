@@ -36,9 +36,9 @@ void main(void)
 
 	print_on_terminal("42 - rleseur\n\n", LIGHT_BLUE);
 
-	printk(KERN_ERR "Ceci est un test ERR de printk.\n");
-	printk(KERN_DEFAULT "Ceci est un test DEFAULT de printk.\n");
-	printk(KERN_WARNING "Ceci est un test WARNING de printk.\n\n");
+	printk(KERN_ERR "This is a printk ERR test.\n");
+	printk(KERN_DEFAULT "This a printk DEFAULT test.\n");
+	printk(KERN_WARNING "This is a printk WARNING test.\n\n");
 
 	print_on_terminal("You can write now:\n", GREEN);
 
