@@ -22,7 +22,6 @@ Is based on a i386 (x86) architecture.
 
 **TODO**:
 - Fix keyboard for arrows and other scancode
-- Constitancy name console/terminal: rename to terminal
 - Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)

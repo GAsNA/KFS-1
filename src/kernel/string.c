@@ -114,7 +114,7 @@ void putaddr(int num, int color)
 	int i;
 
 	if (!num)
-		return (print_on_console("0x0", color));
+		return (print_on_terminal("0x0", color));
 	i = 0;
 	while (num > 0)
 	{
@@ -122,11 +122,11 @@ void putaddr(int num, int color)
 		num = num / 16;
 		i++;
 	}
-	print_on_console("0x", color);
+	print_on_terminal("0x", color);
 	i--;
 	while (i >= 0)
 	{
-		print_char_on_console(str[i], color);
+		print_char_on_terminal(str[i], color);
 		i--;
 	}
 }
@@ -149,10 +149,10 @@ void puthexa_small(int nb, int color)
 	if (n >= 16)
 	{
 		puthexa_small(n / 16, color);
-		print_char_on_console(hexa[n % 16], color);
+		print_char_on_terminal(hexa[n % 16], color);
 	}
 	else
-		print_char_on_console(hexa[n], color);
+		print_char_on_terminal(hexa[n], color);
 }
 
 /**
@@ -173,8 +173,8 @@ void puthexa_capital(int nb, int color)
 	if (n >= 16)
 	{
 		puthexa_capital(n / 16, color);
-		print_char_on_console(hexa[n % 16], color);
+		print_char_on_terminal(hexa[n % 16], color);
 	}
 	else
-		print_char_on_console(hexa[n], color);
+		print_char_on_terminal(hexa[n], color);
 }

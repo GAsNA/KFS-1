@@ -1,0 +1,12 @@
+#ifndef TERMINAL_H
+# define TERMINAL_H
+
+void clear_terminal(void);
+void newline_on_terminal(void);
+void delete_on_terminal(void);
+void tab_on_terminal(void);
+
+void print_char_on_terminal(char c, int color);
+void print_on_terminal(char *str, int color);
+
+#endif

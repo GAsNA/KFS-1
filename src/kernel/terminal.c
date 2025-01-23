@@ -1,11 +1,11 @@
 #include "kernel.h"
 
 /**
- * Blank the entire console
+ * Blank the entire terminal
  *
  * @return void
  */
-void clear_console(void)
+void clear_terminal(void)
 {
 	unsigned int i = 0;
 
@@ -20,11 +20,11 @@ void clear_console(void)
 }
 
 /**
- * Add a newline on the console ('\n')
+ * Add a newline on the terminal ('\n')
  *
  * @return void
  */
-void newline_on_console(void)
+void newline_on_terminal(void)
 {
 	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
 	terminal.current_loc += line_size - terminal.current_loc % line_size;
@@ -33,11 +33,11 @@ void newline_on_console(void)
 }
 
 /**
- * Delete a char on the console ('\b')
+ * Delete a char on the terminal ('\b')
  *
  * @return void
  */
-void delete_on_console(void)
+void delete_on_terminal(void)
 {
 	if (terminal.current_loc - 2 >= 0)
 	{
@@ -49,43 +49,43 @@ void delete_on_console(void)
 }
 
 /**
- * Add a tab on the console ('\t')
+ * Add a tab on the terminal ('\t')
  *
  * @return void
  */
-void tab_on_console(void)
+void tab_on_terminal(void)
 {
 	int i = 0;
 	while (i++ < TAB_SIZE)
-		print_char_on_console(' ', LIGHT_GRAY);
+		print_char_on_terminal(' ', LIGHT_GRAY);
 }
 
 /**
- * Print a char on the console
+ * Print a char on the terminal
  *
  * @param c char to display
  * @param color color of the char to display
  * @return void
  */
-void print_char_on_console(char c, int color)
+void print_char_on_terminal(char c, int color)
 {
 
 	if (c == '\n')
 	{
 		add_char_to_current_screen_buffer(c, color);
-		newline_on_console();
+		newline_on_terminal();
 		return;
 	}
 	if (c == '\b')
 	{
 		delete_on_screen(terminal.current_screen);
-		delete_on_console();
+		delete_on_terminal();
 		return;
 	}
 	if (c == '\t')
 	{
 		add_char_to_current_screen_buffer(c, color);
-		tab_on_console();
+		tab_on_terminal();
 		return;
 	}
 	
@@ -98,17 +98,17 @@ void print_char_on_console(char c, int color)
 }
 
 /**
- * Print a string on the console
+ * Print a string on the terminal
  *
  * @param str string to display
  * @param color color of the str to display
  * @return void
  */
-void print_on_console(char *str, int color)
+void print_on_terminal(char *str, int color)
 {
 	unsigned int i = 0;
 
 	/* this loop writes the string to video memory */
 	while(str[i] != '\0')
-		print_char_on_console(str[i++], color);
+		print_char_on_terminal(str[i++], color);
 }
