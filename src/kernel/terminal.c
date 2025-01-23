@@ -29,7 +29,7 @@ void newline_on_terminal(void)
 	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
 	terminal.current_loc += line_size - terminal.current_loc % line_size;
 
-	fb_move_cursor(terminal.current_loc / 2);
+	move_cursor(terminal.current_loc / 2);
 }
 
 /**
@@ -44,7 +44,7 @@ void delete_on_terminal(void)
 		terminal.vidptr[terminal.current_loc - 2] = '\0';
 		terminal.current_loc -= 2;
 
-		fb_move_cursor(terminal.current_loc / 2);
+		move_cursor(terminal.current_loc / 2);
 	}
 }
 
@@ -94,7 +94,7 @@ void print_char_on_terminal(char c, int color)
 	terminal.vidptr[terminal.current_loc++] = c;
 	terminal.vidptr[terminal.current_loc++] = color;
 
-	fb_move_cursor(terminal.current_loc / 2);
+	move_cursor(terminal.current_loc / 2);
 }
 
 /**
