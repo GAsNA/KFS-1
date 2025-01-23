@@ -25,6 +25,7 @@ Is based on a i386 (x86) architecture.
 - **F2**: go to next screen
 
 **TODO**:
+- Cursor in position before changing screen (actually, it's going to end of buffer)
 - Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)

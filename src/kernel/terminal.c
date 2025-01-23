@@ -46,6 +46,8 @@ void delete_on_terminal(void)
 
 		move_cursor(terminal.current_loc / 2);
 	}
+
+	move_buffer_terminal_to_left();
 }
 
 /**
@@ -61,6 +63,24 @@ void tab_on_terminal(void)
 }
 
 /**
+ * Move the buffer to the left of one char on deletion of a char
+ *
+ * @return void
+ */
+void move_buffer_terminal_to_left(void)
+{
+	int i = terminal.current_loc;
+
+	while (terminal.vidptr[i + 2] != '\0')
+	{
+		terminal.vidptr[i] = terminal.vidptr[i + 2];
+		terminal.vidptr[i + 1] = terminal.vidptr[i + 3];
+		i += 2;
+	}
+	terminal.vidptr[i] = '\0';
+}
+
+/**
  * Print a char on the terminal
  *
  * @param c char to display
@@ -69,27 +89,28 @@ void tab_on_terminal(void)
  */
 void print_char_on_terminal(char c, int color)
 {
-
-	if (c == '\n')
-	{
-		add_char_to_current_screen_buffer(c, color);
-		newline_on_terminal();
-		return;
-	}
 	if (c == '\b')
 	{
 		delete_on_screen(terminal.current_screen);
 		delete_on_terminal();
+		
+		return;
+	}
+
+	add_char_to_current_screen_buffer(c, color);
+
+	if (c == '\n')
+	{
+		newline_on_terminal();
 		return;
 	}
 	if (c == '\t')
 	{
-		add_char_to_current_screen_buffer(c, color);
 		tab_on_terminal();
 		return;
 	}
-	
-	add_char_to_current_screen_buffer(c, color);
+
+	// TODO current_loc update dans move_cursor
 	
 	terminal.vidptr[terminal.current_loc++] = c;
 	terminal.vidptr[terminal.current_loc++] = color;

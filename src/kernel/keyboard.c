@@ -73,6 +73,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD4 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		terminal.current_loc -= 2;
+		terminal.screens[terminal.current_screen].current_loc -= 2;
 		move_cursor(terminal.current_loc / 2);
 		is_checked = 1;
 	}
@@ -80,6 +81,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD6 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		terminal.current_loc += 2;
+		terminal.screens[terminal.current_screen].current_loc -= 2;
 		move_cursor(terminal.current_loc / 2);
 		is_checked = 1;
 	}
@@ -87,6 +89,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD8 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		terminal.current_loc -= NB_COLUMNS * 2;
+		terminal.screens[terminal.current_screen].current_loc -= 2;
 		move_cursor(terminal.current_loc / 2);
 		is_checked = 1;
 	}
@@ -94,6 +97,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD2 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		terminal.current_loc += NB_COLUMNS * 2;
+		terminal.screens[terminal.current_screen].current_loc -= 2;
 		move_cursor(terminal.current_loc / 2);
 		is_checked = 1;
 	}
