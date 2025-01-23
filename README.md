@@ -21,11 +21,11 @@ Is based on a i386 (x86) architecture.
 - **F2**: go to next screen
 
 **TODO**:
-- Fix keyboard for arrows and other scancode
 - Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)
 - Control deletion on terminal (keep in memory the last char that can be deleted)
+- Check for TODO in code
 
 *NB: you can use the dependencies.txt to install all necessaries packages. ``sudo apt/dnf install $(cat dependencies.txt)``*
 

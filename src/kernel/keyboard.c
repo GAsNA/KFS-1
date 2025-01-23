@@ -39,13 +39,15 @@ void simulate_keyboard_interrupt(void)
 }
 
 /**
- * Check if the keycode corresponds to a shortcut or other non printable character
+ * Check if the keycode corresponds to a shortcut or escaped character
  *
- * @return true if the keycode corresponds to one of this non printable character
+ * @return true if the keycode corresponds to one of this shortcut or escaped character
  */
-static int check_for_non_printable_keycode(unsigned char keycode)
+static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 {
 	int is_checked = 0;
+
+	// TODO escaped altgr and ctrlright?
 
 	if (keycode == CAPSLOCK)
 	{
@@ -95,6 +97,28 @@ static int check_for_non_printable_keycode(unsigned char keycode)
 		move_cursor(terminal.current_loc / 2);
 		is_checked = 1;
 	}
+	// If is inser key (keypad0 code with escape code or no numslock)
+	else if (keycode == KEYPAD0 && (terminal.to_escape == 1 || terminal.numslock == 0))
+	{
+		// TODO insert
+		is_checked = 1;
+	}
+	// If is supp key (keypadpoint code with escape code or no numslock)
+	else if (keycode == KEYPADPOINT && (terminal.to_escape == 1 || terminal.numslock == 0))
+	{
+		// TODO delete to right
+		is_checked = 1;
+	}
+	// If is '/' numpad key (slash code with escape code) and no numslock, then do nothing 
+	else if (keycode == SLASH && terminal.to_escape == 1 && terminal.numslock == 0)
+	{
+		is_checked = 1;
+	}
+	// If is enter numpad key (enter code with escape code) and no numslock, then do nothing 
+	else if (keycode == ENTER && terminal.to_escape == 1 && terminal.numslock == 0)
+	{
+		is_checked = 1;
+	}
 
 	// All escaped keys have been checked
 	terminal.to_escape = 0;
@@ -123,7 +147,7 @@ void keyboard_handler(void) {
 
 	if (keycode < 0)
 		return;
-	
+
 	/* Check if this is a key to escaped */
 	/* 0xe0 code is sent before the actual code if it's a key that can be escaped */
 	if (keycode == ESCAPED_KEY_CODE)
@@ -157,8 +181,15 @@ void keyboard_handler(void) {
 	if (!is_pressed)
 		return;
 
+//	if (terminal.to_escape == 1)
+//	{
+//		print_on_terminal("<escape:", MAGENTA);
+//		print_on_terminal(itoa(keycode), MAGENTA);
+//		print_on_terminal("> ", MAGENTA);
+//	}
+
 	/* Check the keycode for non-printable char */
-	if (check_for_non_printable_keycode(keycode))
+	if (check_for_shortcut_and_escaped_keycode(keycode))
 		return;
 		
 	/* Selected the char given by inputs */
