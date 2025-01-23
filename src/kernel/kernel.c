@@ -25,6 +25,7 @@ static void init_terminal(void)
 	terminal.shift = 0;
 	terminal.capslock = 0;
 	terminal.numslock = 1;
+	terminal.to_escape = 0;
 }
 
 void main(void)

@@ -57,11 +57,26 @@ void keyboard_handler(void) {
 
 	keycode = read_port(KEYBOARD_DATA_PORT);
 
+	/* Check if this is a key to escaped */
+	/* 0xe0 code is sent before the actual code if it's a key that can be escaped */
+	if (keycode == ESCAPED_KEY_CODE)
+	{
+		terminal.to_escape = 1;
+		return;
+	}
+
+	if (terminal.to_escape == 1)
+	{
+		terminal.to_escape = 0;
+		return;
+	}
+
 	/* Check if key is pressed or not */
-	if (keycode >= 0x80)
+	/* 0x80 is add to the actual code when the key is released/not pressed anymore */
+	if (keycode >= RELEASED_KEY_CODE)
 		is_pressed = 0;
 	if (!is_pressed)
-		keycode -= 0x80;
+		keycode -= RELEASED_KEY_CODE;
 
 	/* Check if keycode is valid and is shift */
 	if (keycode < 0)

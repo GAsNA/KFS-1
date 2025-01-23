@@ -27,6 +27,7 @@ typedef struct s_terminal
 	int		shift;
 	int		capslock;
 	int		numslock;
+	int		to_escape;
 } t_terminal;
 
 extern t_terminal terminal;
