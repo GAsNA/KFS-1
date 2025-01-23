@@ -67,6 +67,19 @@ void keyboard_handler(void) {
 
 	if (terminal.to_escape == 1)
 	{
+		// TODO: All in move_cursor
+		if (keycode == KEYPAD4)
+			terminal.current_loc -= 2;
+		else if (keycode == KEYPAD6)
+			terminal.current_loc += 2;
+		else if (keycode == KEYPAD8)
+			terminal.current_loc -= NB_COLUMNS * 2;
+		else if (keycode == KEYPAD2)
+			terminal.current_loc += NB_COLUMNS * 2;
+
+		//Update cursor
+		move_cursor(terminal.current_loc / 2);
+
 		terminal.to_escape = 0;
 		return;
 	}
