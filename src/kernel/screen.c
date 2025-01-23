@@ -56,8 +56,8 @@ void add_str_to_current_screen_buffer(char *str, int color)
 }
 
 
-// TODO SIMILAR CODE TO PRINT_CHAR_ON_CONSOLE
-static void copy_buffer_screen_to_console(int screen_number)
+// TODO SIMILAR CODE TO PRINT_CHAR_ON_TERMINAL
+static void copy_buffer_screen_to_terminal(int screen_number)
 {
 	unsigned int i = 0;
 	while(i < SCREENSIZE && terminal.screens[screen_number].buffer[i] != '\0')
@@ -65,9 +65,9 @@ static void copy_buffer_screen_to_console(int screen_number)
 		char c = terminal.screens[screen_number].buffer[i++];
 		int color = terminal.screens[screen_number].buffer[i++];
 		if (c == '\n')
-			newline_on_console();
+			newline_on_terminal();
 		else if (c == '\t')
-			tab_on_console();
+			tab_on_terminal();
 		else
 		{
 			terminal.vidptr[terminal.current_loc++] = c;
@@ -87,13 +87,13 @@ void change_screen(int screen_number)
 	if (screen_number < 0 || screen_number >= LIMIT_NB_SCREENS)
 		return;
 
-	clear_console();
+	clear_terminal();
 	
 	terminal.current_loc = 0;
 	terminal.current_screen = screen_number;
 
 	//memcpy(terminal.vidptr, terminal.screens[screen_number].buffer, SCREENSIZE);
-	copy_buffer_screen_to_console(screen_number);
+	copy_buffer_screen_to_terminal(screen_number);
 
 	fb_move_cursor(terminal.current_loc / 2);
 	

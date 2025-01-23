@@ -33,7 +33,7 @@ extern t_terminal terminal;
 
 # include "color.h"
 # include "keyboard.h"
-# include "console.h"
+# include "terminal.h"
 # include "screen.h"
 # include "string.h"
 # include "printk.h"

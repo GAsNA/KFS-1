@@ -39,7 +39,7 @@ void simulate_keyboard_interrupt(void)
 }
 
 /**
- * Get a keycode from the port 0x60 and print on console the associated char
+ * Get a keycode from the port 0x60 and print on terminal the associated char
  *
  * @return void
  */
@@ -129,5 +129,5 @@ void keyboard_handler(void) {
 		return;
 
 	/* Write on terminal the selected char */
-	print_char_on_console(selected_char, LIGHT_GRAY);
+	print_char_on_terminal(selected_char, LIGHT_GRAY);
 }
