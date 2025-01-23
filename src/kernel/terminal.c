@@ -1,6 +1,27 @@
 #include "kernel.h"
 
 /**
+ * Initialize the main terminal
+ *
+ * @return void
+ */
+void init_terminal(void)
+{
+	terminal.vidptr = (char*)BEGIN_VGA;
+	terminal.current_screen = 0;
+	
+	int i = 0;
+	while (i++ < LIMIT_NB_SCREENS)
+		terminal.screens[i] = init_screen();
+
+	terminal.current_loc = 0;
+	terminal.shift = 0;
+	terminal.capslock = 0;
+	terminal.numslock = 1;
+	terminal.to_escape = 0;
+}
+
+/**
  * Blank the entire terminal
  *
  * @return void

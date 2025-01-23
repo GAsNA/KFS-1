@@ -1,6 +1,8 @@
 #ifndef TERMINAL_H
 # define TERMINAL_H
 
+void init_terminal(void);
+
 void clear_terminal(void);
 void newline_on_terminal(void);
 void delete_on_terminal(void);
