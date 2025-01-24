@@ -10,7 +10,7 @@ t_screen init_screen(void)
 	t_screen screen;
 
 	screen.buffer[0] = '\0';
-	screen.current_loc = 0;
+	screen.cursor = 0;
 	
 	return screen;
 }
@@ -26,9 +26,9 @@ t_screen init_screen(void)
 void add_char_to_screen_buffer(char c, int color, int nb_screen)
 {
 	terminal.screens[nb_screen]
-		.buffer[terminal.screens[nb_screen].current_loc++] = c;
+		.buffer[terminal.screens[nb_screen].cursor++] = c;
 	terminal.screens[nb_screen]
-		.buffer[terminal.screens[nb_screen].current_loc++] = color;
+		.buffer[terminal.screens[nb_screen].cursor++] = color;
 }
 
 /**
@@ -85,8 +85,8 @@ static void copy_buffer_screen_to_terminal(int screen_number)
 			tab_on_terminal();
 		else
 		{
-			terminal.vidptr[terminal.current_loc++] = c;
-			terminal.vidptr[terminal.current_loc++] = color;
+			terminal.vidptr[terminal.cursor++] = c;
+			terminal.vidptr[terminal.cursor++] = color;
 		}
 	}
 }
@@ -104,13 +104,13 @@ void change_screen(int screen_number)
 
 	clear_terminal();
 	
-	terminal.current_loc = 0;
+	terminal.cursor = 0;
 	terminal.current_screen = screen_number;
 
 	//memcpy(terminal.vidptr, terminal.screens[screen_number].buffer, SCREENSIZE);
 	copy_buffer_screen_to_terminal(screen_number);
 
-	move_cursor(terminal.current_loc / 2);
+	move_cursor(terminal.cursor / 2);
 	
 	//write("SCREEN N.", 9, MAGENTA);
 	//write(ft_itoa(screen_number), 1, MAGENTA);
@@ -125,10 +125,10 @@ void change_screen(int screen_number)
  */
 void delete_on_screen(int screen_number)
 {
-	if (terminal.screens[screen_number].current_loc - 2 >= 0)
+	if (terminal.screens[screen_number].cursor - 2 >= 0)
 	{
-		terminal.screens[screen_number].buffer[terminal.screens[screen_number].current_loc - 2] = '\0';
-		terminal.screens[screen_number].current_loc -= 2;
+		terminal.screens[screen_number].buffer[terminal.screens[screen_number].cursor - 2] = '\0';
+		terminal.screens[screen_number].cursor -= 2;
 	}
 
 	move_buffer_screen_to_left(screen_number);	
@@ -142,7 +142,7 @@ void delete_on_screen(int screen_number)
  */
 void move_buffer_screen_to_left(int screen_number)
 {
-	int i = terminal.screens[screen_number].current_loc;
+	int i = terminal.screens[screen_number].cursor;
 
 	while (terminal.screens[screen_number].buffer[i + 2] != '\0')
 	{

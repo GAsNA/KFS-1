@@ -8,26 +8,26 @@
 # define BYTES_FOR_ELEMENT 2
 # define SCREENSIZE BYTES_FOR_ELEMENT * NB_COLUMNS * NB_LINES
 
-# define TAB_SIZE 4
-
 # define LIMIT_NB_SCREENS 5
+
+# define TAB_SIZE 4
 
 typedef struct s_screen
 {
 	char	buffer[SCREENSIZE];
-	int	current_loc;
+	int		cursor;
 } t_screen;
 
 typedef struct s_terminal
 {
 	char		*vidptr;
-	int		current_screen;
+	int			cursor;
+	int			current_screen;
 	t_screen	screens[LIMIT_NB_SCREENS];
-	int		current_loc;
-	int		shift;
-	int		capslock;
-	int		numslock;
-	int		to_escape;
+	int			shift;
+	int			capslock;
+	int			numslock;
+	int			to_escape;
 } t_terminal;
 
 extern t_terminal terminal;
