@@ -17,6 +17,6 @@
  */
 extern void outb(unsigned short port, unsigned char data);
 
-void move_cursor(unsigned short pos);
+void move_cursor(unsigned int pos);
 
 #endif

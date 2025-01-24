@@ -49,9 +49,8 @@ void clear_terminal(void)
 void newline_on_terminal(void)
 {
 	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
-	terminal.cursor += line_size - terminal.cursor % line_size;
 
-	move_cursor(terminal.cursor / 2);
+	move_cursor(terminal.cursor + (line_size - terminal.cursor % line_size));
 }
 
 /**
@@ -64,9 +63,8 @@ void delete_on_terminal(void)
 	if (terminal.cursor - 2 >= 0)
 	{
 		terminal.vidptr[terminal.cursor - 2] = '\0';
-		terminal.cursor -= 2;
 
-		move_cursor(terminal.cursor / 2);
+		move_cursor(terminal.cursor - 2);
 	}
 
 	move_buffer_terminal_to_left();
@@ -79,11 +77,7 @@ void delete_on_terminal(void)
  */
 void tab_on_terminal(void)
 {
-//	int i = 0;
-//	while (i++ < TAB_SIZE)
-//		print_char_on_terminal(' ', LIGHT_GRAY);
-	terminal.cursor += TAB_SIZE * 2;
-	move_cursor(terminal.cursor / 2);
+	move_cursor(terminal.cursor + TAB_SIZE * 2);
 }
 
 /**
@@ -135,12 +129,10 @@ void print_char_on_terminal(char c, int color)
 		return;
 	}
 
-	// TODO cursor update dans move_cursor
-	
-	terminal.vidptr[terminal.cursor++] = c;
-	terminal.vidptr[terminal.cursor++] = color;
+	terminal.vidptr[terminal.cursor] = c;
+	terminal.vidptr[terminal.cursor + 1] = color;
 
-	move_cursor(terminal.cursor / 2);
+	move_cursor(terminal.cursor + 2);
 }
 
 /**
