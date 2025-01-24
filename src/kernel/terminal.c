@@ -110,8 +110,11 @@ void print_char_on_terminal(char c, int color)
 {
 	if (c == '\b')
 	{
-		delete_on_screen(terminal.current_screen);
-		delete_on_terminal();
+		delete_on_screen(terminal.current_screen); // Delete on screen after delete on term
+		delete_on_terminal(); // if on screen is \n so go to next char, if is \t go TAB_SIZE in back
+		// Verify the same thing when moving cursor left or right, BUT how to move up and down
+		// -> for up and down, maybe solution is to not do and begin to work on a term like presentation
+		// rename (and move) this function to 'print' or something like that and seperate functions for print only on term and screen
 		
 		return;
 	}
