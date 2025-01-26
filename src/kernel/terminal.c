@@ -60,6 +60,8 @@ void newline_on_terminal(void)
  */
 void delete_on_terminal(void)
 {
+	char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor, terminal.current_screen);
+	
 	if (terminal.cursor - 2 >= 0)
 	{
 		terminal.vidptr[terminal.cursor - 2] = '\0';

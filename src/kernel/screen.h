@@ -3,6 +3,8 @@
 
 t_screen init_screen(void);
 
+char char_at_pos_in_screen(unsigned int pos, int screen_number);
+
 void add_char_to_screen_buffer(char c, int color, int nb_screen);
 void add_str_to_screen_buffer(char *c, int color, int nb_screen);
 void add_char_to_current_screen_buffer(char c, int color);

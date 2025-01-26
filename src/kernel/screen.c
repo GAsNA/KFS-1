@@ -15,6 +15,11 @@ t_screen init_screen(void)
 	return screen;
 }
 
+char char_at_pos_in_screen(unsigned int pos, int screen_number)
+{
+	return terminal.screens[screen_number].buffer[pos];
+}
+
 /**
  * Add a char to choose screen buffer
  *
@@ -85,10 +90,14 @@ static void copy_buffer_screen_to_terminal(int screen_number)
 			tab_on_terminal();
 		else
 		{
-			terminal.vidptr[terminal.cursor++] = c;
-			terminal.vidptr[terminal.cursor++] = color;
+			terminal.vidptr[terminal.cursor] = c;
+			terminal.vidptr[terminal.cursor + 1] = color;
+
+			move_cursor(terminal.cursor + 2);
 		}
 	}
+
+	move_cursor(terminal.cursor);
 }
 
 /**
