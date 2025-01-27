@@ -76,11 +76,11 @@ void add_str_to_current_screen_buffer(char *str, int color)
 }
 
 
-// TODO SIMILAR CODE TO PRINT_CHAR_ON_TERMINAL
+// TODO BECOME PRINT_ON_TERMINAL
 static void copy_buffer_screen_to_terminal(int screen_number)
 {
 	unsigned int i = 0;
-	while(i < SCREENSIZE && terminal.screens[screen_number].buffer[i] != '\0')
+	while(terminal.screens[screen_number].buffer[i] != '\0')
 	{
 		char c = terminal.screens[screen_number].buffer[i++];
 		int color = terminal.screens[screen_number].buffer[i++];
@@ -93,10 +93,11 @@ static void copy_buffer_screen_to_terminal(int screen_number)
 			terminal.vidptr[terminal.cursor] = c;
 			terminal.vidptr[terminal.cursor + 1] = color;
 
-			move_cursor(terminal.cursor + 2);
+			move_cursor(terminal.cursor + BYTES_FOR_ELEMENT);
 		}
 	}
 
+	terminal.screens[screen_number].cursor = i;
 	move_cursor(terminal.cursor);
 }
 
@@ -116,12 +117,7 @@ void change_screen(int screen_number)
 	terminal.cursor = 0;
 	terminal.current_screen = screen_number;
 
-	//memcpy(terminal.vidptr, terminal.screens[screen_number].buffer, SCREENSIZE);
 	copy_buffer_screen_to_terminal(screen_number);
-	
-	//write("SCREEN N.", 9, MAGENTA);
-	//write(ft_itoa(screen_number), 1, MAGENTA);
-	//write("\n", 1, MAGENTA);
 }
 
 /**
@@ -132,10 +128,10 @@ void change_screen(int screen_number)
  */
 void delete_on_screen(int screen_number)
 {
-	if (terminal.screens[screen_number].cursor - 2 >= 0)
+	if (terminal.screens[screen_number].cursor - BYTES_FOR_ELEMENT >= 0)
 	{
-		terminal.screens[screen_number].buffer[terminal.screens[screen_number].cursor - 2] = '\0';
-		terminal.screens[screen_number].cursor -= 2;
+		terminal.screens[screen_number].buffer[terminal.screens[screen_number].cursor - BYTES_FOR_ELEMENT] = '\0';
+		terminal.screens[screen_number].cursor -= BYTES_FOR_ELEMENT;
 
 		//move_buffer_screen_to_left(screen_number);	
 	}
@@ -151,11 +147,11 @@ void move_buffer_screen_to_left(int screen_number)
 {
 	int i = terminal.screens[screen_number].cursor;
 
-	while (terminal.screens[screen_number].buffer[i + 2] != '\0')
+	while (terminal.screens[screen_number].buffer[i + BYTES_FOR_ELEMENT] != '\0')
 	{
 		terminal.screens[screen_number].buffer[i] = terminal.screens[screen_number].buffer[i + 2];
 		terminal.screens[screen_number].buffer[i + 1] = terminal.screens[screen_number].buffer[i + 3];
-		i += 2;
+		i += BYTES_FOR_ELEMENT;
 	}
 	terminal.screens[screen_number].buffer[i] = '\0';
 }

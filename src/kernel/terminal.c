@@ -60,28 +60,24 @@ void newline_on_terminal(void)
  */
 void delete_on_terminal(void)
 {
-	char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor - 2, terminal.current_screen);
+	char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor - BYTES_FOR_ELEMENT, terminal.current_screen);
 
 	if (c == '\n')
 	{
-		int i = 0;
+		int i = BYTES_FOR_ELEMENT;
 		while (terminal.vidptr[terminal.cursor - i] == '\0')
-			i += 2;
-		move_cursor(terminal.cursor - i + 2);
+			i += BYTES_FOR_ELEMENT;
+		move_cursor(terminal.cursor - i + BYTES_FOR_ELEMENT);
+		// TODO if several \n in a row, skip them all: don't, stop to the previous \n
 	}
 	else if (c == '\t')
-	{
-		int i = 0;
-		while (i < TAB_SIZE * 2)
-			i += 2;
-		move_cursor(terminal.cursor - (TAB_SIZE * 2));
-	}
+		move_cursor(terminal.cursor - (TAB_SIZE * BYTES_FOR_ELEMENT));
 	else
 	{
-		if (terminal.cursor - 2 >= 0)
+		if (terminal.cursor - BYTES_FOR_ELEMENT >= 0)
 		{
-			terminal.vidptr[terminal.cursor - 2] = '\0';
-			move_cursor(terminal.cursor - 2);
+			terminal.vidptr[terminal.cursor - BYTES_FOR_ELEMENT] = '\0';
+			move_cursor(terminal.cursor - BYTES_FOR_ELEMENT);
 			//move_buffer_terminal_to_left();
 		}
 	}
@@ -94,7 +90,7 @@ void delete_on_terminal(void)
  */
 void tab_on_terminal(void)
 {
-	move_cursor(terminal.cursor + TAB_SIZE * 2);
+	move_cursor(terminal.cursor + TAB_SIZE * BYTES_FOR_ELEMENT);
 }
 
 /**
@@ -106,11 +102,11 @@ void move_buffer_terminal_to_left(void)
 {
 	int i = terminal.cursor;
 
-	while (terminal.vidptr[i + 2] != '\0')
+	while (terminal.vidptr[i + BYTES_FOR_ELEMENT] != '\0')
 	{
 		terminal.vidptr[i] = terminal.vidptr[i + 2];
 		terminal.vidptr[i + 1] = terminal.vidptr[i + 3];
-		i += 2;
+		i += BYTES_FOR_ELEMENT;
 	}
 	terminal.vidptr[i] = '\0';
 	terminal.vidptr[i + 1] = '\0';
@@ -123,15 +119,13 @@ void move_buffer_terminal_to_left(void)
  * @param color color of the char to display
  * @return void
  */
+// TODO BECOME PRINT
 void print_char_on_terminal(char c, int color)
 {
 	if (c == '\b')
 	{
-		delete_on_terminal(); // if on screen is \n so go to next char, if is \t go TAB_SIZE in back
-		// Verify the same thing when moving cursor left or right, BUT how to move up and down
-		// -> for up and down, maybe solution is to not do and begin to work on a term like presentation
-		// rename (and move) this function to 'print' or something like that and seperate functions for print only on term and screen
-		delete_on_screen(terminal.current_screen); // Delete on screen after delete on term
+		delete_on_terminal();
+		delete_on_screen(terminal.current_screen);
 		
 		return;
 	}
@@ -152,7 +146,7 @@ void print_char_on_terminal(char c, int color)
 	terminal.vidptr[terminal.cursor] = c;
 	terminal.vidptr[terminal.cursor + 1] = color;
 
-	move_cursor(terminal.cursor + 2);
+	move_cursor(terminal.cursor + BYTES_FOR_ELEMENT);
 }
 
 /**

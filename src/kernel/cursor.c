@@ -8,14 +8,14 @@
  */
 void move_cursor(unsigned int pos)
 {
-	if (pos % 2 != 0)
+	if (pos % BYTES_FOR_ELEMENT != 0)
 		return;
 
 	// Move terminal cursor
 	terminal.cursor = pos;
 
 	// Move blinking cursor
-	pos /= 2;
+	pos /= BYTES_FOR_ELEMENT;
 
     outb(COMMAND_PORT, HIGH_BYTE_COMMAND);
     outb(DATA_PORT,    ((pos >> 8) & 0x00FF));

@@ -72,33 +72,63 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	// If is left arrow or keypad 4 with no numslock, move cursor to left
 	else if (keycode == KEYPAD4 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-//		terminal.cursor -= 2;
-//		terminal.screens[terminal.current_screen].cursor -= 2;
-//		move_cursor(terminal.cursor / 2);
+		// TODO SAME AS DELETE ON TERMINAL
+		char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor - BYTES_FOR_ELEMENT, terminal.current_screen);
+
+		if (c == '\n')
+		{
+			int i = BYTES_FOR_ELEMENT;
+			while (terminal.vidptr[terminal.cursor - i] == '\0')
+				i += BYTES_FOR_ELEMENT;
+			move_cursor(terminal.cursor - i + BYTES_FOR_ELEMENT);
+			// TODO if several \n in a row, skip them all: don't, stop to the previous \n
+		}
+		else if (c == '\t')
+			move_cursor(terminal.cursor - (TAB_SIZE * BYTES_FOR_ELEMENT));
+		else
+			move_cursor(terminal.cursor - BYTES_FOR_ELEMENT);
+		
+		// Move cursor left on screen buffer
+		terminal.screens[terminal.current_screen].cursor -= BYTES_FOR_ELEMENT;
 		is_checked = 1;
 	}
 	// If is right arrow or keypad 6 with no numslock, move cursor to right
 	else if (keycode == KEYPAD6 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-//		terminal.cursor += 2;
-//		terminal.screens[terminal.current_screen].cursor -= 2;
-//		move_cursor(terminal.cursor / 2);
+		// TODO SIMILAR TO MOVE LEFT
+		char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor, terminal.current_screen);
+
+		if (c == '\n')
+		{
+			int i = 0;
+			while (terminal.vidptr[terminal.cursor + i] == '\0')
+				i += BYTES_FOR_ELEMENT;
+			move_cursor(terminal.cursor + i);
+			// TODO if several \n in a row, skip them all: don't, stop to the previous \n
+		}
+		else if (c == '\t')
+			move_cursor(terminal.cursor + (TAB_SIZE * BYTES_FOR_ELEMENT));
+		else
+			move_cursor(terminal.cursor + BYTES_FOR_ELEMENT);
+
+		//move_cursor(terminal.cursor + BYTES_FOR_ELEMENT);
+		terminal.screens[terminal.current_screen].cursor += BYTES_FOR_ELEMENT;
 		is_checked = 1;
 	}
 	// If is up arrow or keypad 8 with no numslock, move cursor up
 	else if (keycode == KEYPAD8 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-//		terminal.cursor -= NB_COLUMNS * 2;
-//		terminal.screens[terminal.current_screen].cursor -= 2;
-//		move_cursor(terminal.cursor / 2);
+//		terminal.cursor -= NB_COLUMNS * BYTES_FOR_ELEMENT;
+//		terminal.screens[terminal.current_screen].cursor -= BYTES_FOR_ELEMENT;
+//		move_cursor(terminal.cursor / BYTES_FOR_ELEMENT);
 		is_checked = 1;
 	}
 	// If is down arrow or keypad 2 with no numslock, move cursor down
 	else if (keycode == KEYPAD2 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-//		terminal.cursor += NB_COLUMNS * 2;
-//		terminal.screens[terminal.current_screen].cursor -= 2;
-//		move_cursor(terminal.cursor / 2);
+//		terminal.cursor += NB_COLUMNS * BYTES_FOR_ELEMENT;
+//		terminal.screens[terminal.current_screen].cursor -= BYTES_FOR_ELEMENT;
+//		move_cursor(terminal.cursor / BYTES_FOR_ELEMENT);
 		is_checked = 1;
 	}
 	// If is inser key (keypad0 code with escape code or no numslock)
