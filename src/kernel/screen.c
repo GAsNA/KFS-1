@@ -136,9 +136,9 @@ void delete_on_screen(int screen_number)
 	{
 		terminal.screens[screen_number].buffer[terminal.screens[screen_number].cursor - 2] = '\0';
 		terminal.screens[screen_number].cursor -= 2;
-	}
 
-	move_buffer_screen_to_left(screen_number);	
+		//move_buffer_screen_to_left(screen_number);	
+	}
 }
 
 /**

@@ -42,7 +42,7 @@ void clear_terminal(void)
 }
 
 /**
- * Add a newline on the terminal ('\n'). Is actually moving the loc
+ * Add a newline on the terminal ('\n'). Is actually moving the cursor
  *
  * @return void
  */
@@ -60,20 +60,35 @@ void newline_on_terminal(void)
  */
 void delete_on_terminal(void)
 {
-	char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor, terminal.current_screen);
-	
-	if (terminal.cursor - 2 >= 0)
+	char c = char_at_pos_in_screen(terminal.screens[terminal.current_screen].cursor - 2, terminal.current_screen);
+
+	if (c == '\n')
 	{
-		terminal.vidptr[terminal.cursor - 2] = '\0';
-
-		move_cursor(terminal.cursor - 2);
+		int i = 0;
+		while (terminal.vidptr[terminal.cursor - i] == '\0')
+			i += 2;
+		move_cursor(terminal.cursor - i + 2);
 	}
-
-	move_buffer_terminal_to_left();
+	else if (c == '\t')
+	{
+		int i = 0;
+		while (i < TAB_SIZE * 2)
+			i += 2;
+		move_cursor(terminal.cursor - (TAB_SIZE * 2));
+	}
+	else
+	{
+		if (terminal.cursor - 2 >= 0)
+		{
+			terminal.vidptr[terminal.cursor - 2] = '\0';
+			move_cursor(terminal.cursor - 2);
+			//move_buffer_terminal_to_left();
+		}
+	}
 }
 
 /**
- * Add a tab on the terminal ('\t'). Is actually moving the loc
+ * Add a tab on the terminal ('\t'). Is actually moving the cursor
  *
  * @return void
  */
@@ -112,11 +127,11 @@ void print_char_on_terminal(char c, int color)
 {
 	if (c == '\b')
 	{
-		delete_on_screen(terminal.current_screen); // Delete on screen after delete on term
 		delete_on_terminal(); // if on screen is \n so go to next char, if is \t go TAB_SIZE in back
 		// Verify the same thing when moving cursor left or right, BUT how to move up and down
 		// -> for up and down, maybe solution is to not do and begin to work on a term like presentation
 		// rename (and move) this function to 'print' or something like that and seperate functions for print only on term and screen
+		delete_on_screen(terminal.current_screen); // Delete on screen after delete on term
 		
 		return;
 	}
