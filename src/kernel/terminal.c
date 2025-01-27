@@ -54,6 +54,16 @@ void newline_on_terminal(void)
 }
 
 /**
+ * Add a tab on the terminal ('\t'). Is actually moving the cursor
+ *
+ * @return void
+ */
+void tab_on_terminal(void)
+{
+	move_cursor(terminal.cursor + TAB_SIZE * BYTES_FOR_ELEMENT);
+}
+
+/**
  * Delete a char on the terminal ('\b')
  *
  * @return void
@@ -68,48 +78,49 @@ void delete_on_terminal(void)
 		while (terminal.vidptr[terminal.cursor - i] == '\0')
 			i += BYTES_FOR_ELEMENT;
 		move_cursor(terminal.cursor - i + BYTES_FOR_ELEMENT);
+		move_buffer_terminal_to_left(i - BYTES_FOR_ELEMENT);
 		// TODO if several \n in a row, skip them all: don't, stop to the previous \n
 	}
 	else if (c == '\t')
+	{
 		move_cursor(terminal.cursor - (TAB_SIZE * BYTES_FOR_ELEMENT));
+		move_buffer_terminal_to_left(TAB_SIZE * BYTES_FOR_ELEMENT);
+	}
 	else
 	{
 		if (terminal.cursor - BYTES_FOR_ELEMENT >= 0)
 		{
 			terminal.vidptr[terminal.cursor - BYTES_FOR_ELEMENT] = '\0';
 			move_cursor(terminal.cursor - BYTES_FOR_ELEMENT);
-			//move_buffer_terminal_to_left();
+			move_buffer_terminal_to_left(BYTES_FOR_ELEMENT);
 		}
 	}
 }
 
 /**
- * Add a tab on the terminal ('\t'). Is actually moving the cursor
+ * Move the buffer to the left of n bytes to the left
  *
+ * @param n the number of bytes each bytes will move
  * @return void
  */
-void tab_on_terminal(void)
-{
-	move_cursor(terminal.cursor + TAB_SIZE * BYTES_FOR_ELEMENT);
-}
-
-/**
- * Move the buffer to the left of one char on deletion of a char
- *
- * @return void
- */
-void move_buffer_terminal_to_left(void)
+void move_buffer_terminal_to_left(int n)
 {
 	int i = terminal.cursor;
 
-	while (terminal.vidptr[i + BYTES_FOR_ELEMENT] != '\0')
+	while (terminal.vidptr[i + n] != '\0') // What if there is a \n or \t after, need to do with screen buffer again
 	{
-		terminal.vidptr[i] = terminal.vidptr[i + 2];
-		terminal.vidptr[i + 1] = terminal.vidptr[i + 3];
+		terminal.vidptr[i] = terminal.vidptr[i + n];
+		terminal.vidptr[i + 1] = terminal.vidptr[i + n + 1];
 		i += BYTES_FOR_ELEMENT;
 	}
-	terminal.vidptr[i] = '\0';
-	terminal.vidptr[i + 1] = '\0';
+
+	// CLEAR
+	while (n >= 0)
+	{
+		terminal.vidptr[i + n] = '\0';
+		terminal.vidptr[i + n + 1] = LIGHT_GRAY;
+		n -= BYTES_FOR_ELEMENT;
+	}
 }
 
 /**

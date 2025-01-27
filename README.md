@@ -25,6 +25,7 @@ Is based on a i386 (x86) architecture.
 - **F2**: go to next screen
 
 **TODO**:
+- Insertion in buffer
 - Rework of all functions in string.c
 - Cursor in position before changing screen (actually, it's going to end of buffer)
 - Clean code for .h please

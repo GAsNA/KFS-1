@@ -133,7 +133,7 @@ void delete_on_screen(int screen_number)
 		terminal.screens[screen_number].buffer[terminal.screens[screen_number].cursor - BYTES_FOR_ELEMENT] = '\0';
 		terminal.screens[screen_number].cursor -= BYTES_FOR_ELEMENT;
 
-		//move_buffer_screen_to_left(screen_number);	
+		move_buffer_screen_to_left(screen_number);	
 	}
 }
 
@@ -154,4 +154,5 @@ void move_buffer_screen_to_left(int screen_number)
 		i += BYTES_FOR_ELEMENT;
 	}
 	terminal.screens[screen_number].buffer[i] = '\0';
+	terminal.screens[screen_number].buffer[i + 1] = '\0';
 }
