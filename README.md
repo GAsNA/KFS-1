@@ -26,7 +26,6 @@ Is based on a i386 (x86) architecture.
 
 **TODO**:
 - Cursor in position before changing screen (actually, it's going to end of buffer)
-- Fix deletion for \n and \t
 - Clean code for .h please
 - Store files in different folders (in src/kernel)
 - Control deletion on terminal (keep in memory the last char that can be deleted)
