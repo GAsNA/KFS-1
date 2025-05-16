@@ -47,9 +47,7 @@ void clear_terminal(void)
  */
 void newline_on_terminal(void)
 {
-	unsigned int line_size = BYTES_FOR_ELEMENT * NB_COLUMNS;
-	terminal.current_loc += line_size - terminal.current_loc % line_size;
-
+	terminal.current_loc += LINE_SIZE - terminal.current_loc % LINE_SIZE;
 	move_cursor(terminal.current_loc / 2);
 }
 
@@ -114,7 +112,7 @@ void print_char_on_terminal(char c, int color)
 	{
 		delete_on_screen(terminal.current_screen);
 		delete_on_terminal();
-		
+
 		return;
 	}
 
