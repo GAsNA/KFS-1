@@ -3,10 +3,10 @@
 
 t_screen init_screen(void);
 
-void add_char_to_screen_buffer(char c, int color, int nb_screen);
-void add_str_to_screen_buffer(char *c, int color, int nb_screen);
-void add_char_to_current_screen_buffer(char c, int color);
-void add_str_to_current_screen_buffer(char *c, int color);
+void add_char_to_screen_buffer(char c, int colour, int nb_screen);
+void add_str_to_screen_buffer(char *c, int colour, int nb_screen);
+void add_char_to_current_screen_buffer(char c, int colour);
+void add_str_to_current_screen_buffer(char *c, int colour);
 
 void change_screen(int screen_number);
 

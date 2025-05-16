@@ -19,55 +19,55 @@ t_screen init_screen(void)
  * Add a char to choose screen buffer
  *
  * @param c character to add to buffer
- * @param color color to apply on the char
+ * @param colour colour to apply on the char
  * @param nb_screen screen to which to add to buffer
  * @return void
  */
-void add_char_to_screen_buffer(char c, int color, int nb_screen)
+void add_char_to_screen_buffer(char c, int colour, int nb_screen)
 {
 	terminal.screens[nb_screen]
 		.buffer[terminal.screens[nb_screen].current_loc++] = c;
 	terminal.screens[nb_screen]
-		.buffer[terminal.screens[nb_screen].current_loc++] = color;
+		.buffer[terminal.screens[nb_screen].current_loc++] = colour;
 }
 
 /**
  * Add a str to choose screen buffer
  *
  * @param str string to add to buffer
- * @param color color to apply on the str
+ * @param colour colour to apply on the str
  * @param nb_screen screen to which to add to buffer
  * @return void
  */
-void add_str_to_screen_buffer(char *str, int color, int nb_screen)
+void add_str_to_screen_buffer(char *str, int colour, int nb_screen)
 {
 	int i = 0;
 	while (str[i] != '\0')
-		add_char_to_screen_buffer(str[i++], color, nb_screen);
+		add_char_to_screen_buffer(str[i++], colour, nb_screen);
 }
 
 /**
  * Add a char to current screen buffer
  *
  * @param c character to add to buffer
- * @param color color to apply on the char
+ * @param colour colour to apply on the char
  * @return void
  */
-void add_char_to_current_screen_buffer(char c, int color)
+void add_char_to_current_screen_buffer(char c, int colour)
 {
-	add_char_to_screen_buffer(c, color, terminal.current_screen);
+	add_char_to_screen_buffer(c, colour, terminal.current_screen);
 }
 
 /**
  * Add a str to current screen buffer
  *
  * @param str string to add to buffer
- * @param color color to apply on the str
+ * @param colour colour to apply on the str
  * @return void
  */
-void add_str_to_current_screen_buffer(char *str, int color)
+void add_str_to_current_screen_buffer(char *str, int colour)
 {
-	add_str_to_screen_buffer(str, color, terminal.current_screen);
+	add_str_to_screen_buffer(str, colour, terminal.current_screen);
 }
 
 
@@ -78,7 +78,7 @@ static void copy_buffer_screen_to_terminal(int screen_number)
 	while(i < SCREENSIZE && terminal.screens[screen_number].buffer[i] != '\0')
 	{
 		char c = terminal.screens[screen_number].buffer[i++];
-		int color = terminal.screens[screen_number].buffer[i++];
+		int colour = terminal.screens[screen_number].buffer[i++];
 		if (c == '\n')
 			newline_on_terminal();
 		else if (c == '\t')
@@ -86,7 +86,7 @@ static void copy_buffer_screen_to_terminal(int screen_number)
 		else
 		{
 			terminal.vidptr[terminal.current_loc++] = c;
-			terminal.vidptr[terminal.current_loc++] = color;
+			terminal.vidptr[terminal.current_loc++] = colour;
 		}
 	}
 }

@@ -103,10 +103,10 @@ void move_buffer_terminal_to_left(void)
  * Print a char on the terminal
  *
  * @param c char to display
- * @param color color of the char to display
+ * @param colour colour of the char to display
  * @return void
  */
-void print_char_on_terminal(char c, int color)
+void print_char_on_terminal(char c, int colour)
 {
 	if (c == '\b')
 	{
@@ -116,7 +116,7 @@ void print_char_on_terminal(char c, int color)
 		return;
 	}
 
-	add_char_to_current_screen_buffer(c, color);
+	add_char_to_current_screen_buffer(c, colour);
 
 	if (c == '\n')
 	{
@@ -125,14 +125,14 @@ void print_char_on_terminal(char c, int color)
 	}
 	if (c == '\t')
 	{
-		tab_on_terminal();
+		tab_on_terminal(colour);
 		return;
 	}
 
 	// TODO current_loc update dans move_cursor
 	
 	terminal.vidptr[terminal.current_loc++] = c;
-	terminal.vidptr[terminal.current_loc++] = color;
+	terminal.vidptr[terminal.current_loc++] = colour;
 
 	move_cursor(terminal.current_loc / 2);
 }
@@ -141,14 +141,14 @@ void print_char_on_terminal(char c, int color)
  * Print a string on the terminal
  *
  * @param str string to display
- * @param color color of the str to display
+ * @param colour colour of the str to display
  * @return void
  */
-void print_on_terminal(char *str, int color)
+void print_on_terminal(char *str, int colour)
 {
 	unsigned int i = 0;
 
 	/* this loop writes the string to video memory */
 	while(str[i] != '\0')
-		print_char_on_terminal(str[i++], color);
+		print_char_on_terminal(str[i++], colour);
 }
