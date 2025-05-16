@@ -10,7 +10,7 @@ void tab_on_terminal(void);
 
 void move_buffer_terminal_to_left(void);
 
-void print_char_on_terminal(char c, int color);
-void print_on_terminal(char *str, int color);
+void print_char_on_terminal(char c, int colour);
+void print_on_terminal(char *str, int colour);
 
 #endif

@@ -4,27 +4,27 @@
  * Print the arguments given for printk
  *
  * @param c the character that represents the type of value to display
- * @param color the color to use to print
+ * @param colour the colour to use to print
  * @return void
  */
-static void print_arg(char c, void **arg, int color)
+static void print_arg(char c, void **arg, int colour)
 {
 	if (c == 'c')
-		print_char_on_terminal((char)*(char *)(arg), color);
+		print_char_on_terminal((char)*(char *)(arg), colour);
 	else if (c == 's')
-		print_on_terminal(*(char **)(arg), color);
+		print_on_terminal(*(char **)(arg), colour);
 	else if (c == 'p')
-		putaddr((unsigned int)*(char **)(arg), color);
+		putaddr((unsigned int)*(char **)(arg), colour);
 	else if (c == 'i' || c == 'd')
-		print_on_terminal(itoa((int)*(int **)(arg)), color);
+		print_on_terminal(itoa((int)*(int **)(arg)), colour);
 	else if (c == 'u')
-		print_on_terminal(itoa((unsigned int)*(int **)(arg)), color);
+		print_on_terminal(itoa((unsigned int)*(int **)(arg)), colour);
 	else if (c == 'x')
-		puthexa_small((int)*(int **)(arg), color);
+		puthexa_small((int)*(int **)(arg), colour);
 	else if (c == 'X')
-		puthexa_capital((int)*(int **)(arg), color);
+		puthexa_capital((int)*(int **)(arg), colour);
 	else if (c == '%')
-		print_char_on_terminal('%', color);
+		print_char_on_terminal('%', colour);
 }
 
 /**
@@ -36,72 +36,72 @@ static void print_arg(char c, void **arg, int color)
 void printk(char *fmt, ...)
 {
 	int i = 0;
-	int color = LIGHT_GRAY;
+	int colour = LIGHT_GRAY;
 	void **args = (void **) &fmt;
 	args++;
 
 	if (!fmt)
 		return;
 
-	// Print the header and choose color
+	// Print the header and choose colour
 	if (strncmp(fmt, KERN_EMERG, 3) == 0)
 	{
-		color = RED;
-		print_on_terminal("<emerg> ", color);
+		colour = RED;
+		print_on_terminal("<emerg> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_ALERT, 3) == 0)
 	{
-		color = RED;
-		print_on_terminal("<alert> ", color);
+		colour = RED;
+		print_on_terminal("<alert> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_CRIT, 3) == 0)
 	{
-		color = RED;
-		print_on_terminal("<crit> ", color);
+		colour = RED;
+		print_on_terminal("<crit> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_ERR, 3) == 0)
 	{
-		color = RED;
-		print_on_terminal("<err> ", color);
+		colour = RED;
+		print_on_terminal("<err> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_WARNING, 3) == 0)
 	{
-		color = YELLOW;
-		print_on_terminal("<warn> ", color);
+		colour = YELLOW;
+		print_on_terminal("<warn> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_NOTICE, 3) == 0)
 	{
-		color = MAGENTA;
-		print_on_terminal("<notice> ", color);
+		colour = MAGENTA;
+		print_on_terminal("<notice> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_INFO, 3) == 0)
 	{
-		color = LIGHT_GRAY;
-		print_on_terminal("<info> ", color);
+		colour = LIGHT_GRAY;
+		print_on_terminal("<info> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_DEBUG, 3) == 0)
 	{
-		color = LIGHT_GRAY;
-		print_on_terminal("<debug> ", color);
+		colour = LIGHT_GRAY;
+		print_on_terminal("<debug> ", colour);
 		fmt = fmt + 3;
 	}
 	else if (strncmp(fmt, KERN_CONT, 3) == 0)
 	{
-		color = LIGHT_GRAY;
-		print_on_terminal("<cont> ", color);
+		colour = LIGHT_GRAY;
+		print_on_terminal("<cont> ", colour);
 		fmt = fmt + 3;
 	}
 	else
 	{
-		color = LIGHT_GRAY;
-		print_on_terminal("<default> ", color);
+		colour = LIGHT_GRAY;
+		print_on_terminal("<default> ", colour);
 	}
 	
 	// Interpret the string
@@ -110,11 +110,11 @@ void printk(char *fmt, ...)
 		if (fmt[i] == '%')
 		{
 			i++;
-			print_arg(fmt[i], args, color);
+			print_arg(fmt[i], args, colour);
 			args++;
 		}
 		else
-			print_char_on_terminal(fmt[i], color);
+			print_char_on_terminal(fmt[i], colour);
 		i++;
 	}
 }

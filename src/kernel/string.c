@@ -105,16 +105,16 @@ int strncmp(char *s1, char *s2, unsigned int n)
  * Print a memory address in hexa
  *
  * @param num the value to which the address belongs
- * @param color the color to use to print
+ * @param colour the colour to use to print
  * @return void
  */
-void putaddr(int num, int color)
+void putaddr(int num, int colour)
 {
 	char str[255];
 	int i;
 
 	if (!num)
-		return (print_on_terminal("0x0", color));
+		return (print_on_terminal("0x0", colour));
 	i = 0;
 	while (num > 0)
 	{
@@ -122,11 +122,11 @@ void putaddr(int num, int color)
 		num = num / 16;
 		i++;
 	}
-	print_on_terminal("0x", color);
+	print_on_terminal("0x", colour);
 	i--;
 	while (i >= 0)
 	{
-		print_char_on_terminal(str[i], color);
+		print_char_on_terminal(str[i], colour);
 		i--;
 	}
 }
@@ -135,10 +135,10 @@ void putaddr(int num, int color)
  * Print a value in hexa in small characters
  *
  * @param nb the value to convert and print
- * @param color the color to use to print
+ * @param colour the colour to use to print
  * @return void
  */
-void puthexa_small(int nb, int color)
+void puthexa_small(int nb, int colour)
 {
 	char *hexa = "0123456789abcdef";
 	long	n;
@@ -148,21 +148,21 @@ void puthexa_small(int nb, int color)
 		n += 4294967296;
 	if (n >= 16)
 	{
-		puthexa_small(n / 16, color);
-		print_char_on_terminal(hexa[n % 16], color);
+		puthexa_small(n / 16, colour);
+		print_char_on_terminal(hexa[n % 16], colour);
 	}
 	else
-		print_char_on_terminal(hexa[n], color);
+		print_char_on_terminal(hexa[n], colour);
 }
 
 /**
  * Print a value in hexa in capital characters
  *
  * @param nb the value to convert and print
- * @param color the color to use to print
+ * @param colour the colour to use to print
  * @return void
  */
-void puthexa_capital(int nb, int color)
+void puthexa_capital(int nb, int colour)
 {
 	char *hexa = "0123456789ABCDEF";
 	long	n;
@@ -172,9 +172,9 @@ void puthexa_capital(int nb, int color)
 		n += 4294967296;
 	if (n >= 16)
 	{
-		puthexa_capital(n / 16, color);
-		print_char_on_terminal(hexa[n % 16], color);
+		puthexa_capital(n / 16, colour);
+		print_char_on_terminal(hexa[n % 16], colour);
 	}
 	else
-		print_char_on_terminal(hexa[n], color);
+		print_char_on_terminal(hexa[n], colour);
 }

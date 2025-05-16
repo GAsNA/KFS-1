@@ -9,6 +9,7 @@
 # define LINE_SIZE BYTES_FOR_ELEMENTS * NB_COLUMNS
 # define SCREENSIZE LINE_SIZE * NB_LINES
 
+//TODO: Add safety on defines, if line_size = 0 division by zero might occur
 # define TAB_SIZE 4
 
 # define LIMIT_NB_SCREENS 5
@@ -33,7 +34,7 @@ typedef struct s_terminal
 
 extern t_terminal terminal;
 
-# include "color.h"
+# include "colour.h"
 # include "keyboard.h"
 # include "terminal.h"
 # include "screen.h"
