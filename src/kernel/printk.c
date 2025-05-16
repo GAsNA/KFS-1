@@ -4,13 +4,14 @@
  * Print the arguments given for printk
  *
  * @param c the character that represents the type of value to display
+ * @param arg variadic argument to fetch to process the flag
  * @param colour the colour to use to print
  * @return void
  */
-static void print_arg(char c, void **arg, int colour)
+static void print_arg(char c, void **arg, char colour)
 {
 	if (c == 'c')
-		print_char_on_terminal((char)*(char *)(arg), colour);
+		print_short_on_terminal(((char)*(char *)(arg)) | (colour << 8));
 	else if (c == 's')
 		print_on_terminal(*(char **)(arg), colour);
 	else if (c == 'p')
@@ -24,13 +25,14 @@ static void print_arg(char c, void **arg, int colour)
 	else if (c == 'X')
 		puthexa_capital((int)*(int **)(arg), colour);
 	else if (c == '%')
-		print_char_on_terminal('%', colour);
+		print_short_on_terminal('%' | (colour << 8));
 }
 
 /**
  * Print messages with a log level to the kernel
  *
  * @param fmt format string to print
+ * @param ... variadic argument matching the format flags
  * @return void
  */
 void printk(char *fmt, ...)
@@ -103,7 +105,7 @@ void printk(char *fmt, ...)
 		colour = LIGHT_GRAY;
 		print_on_terminal("<default> ", colour);
 	}
-	
+
 	// Interpret the string
 	while (fmt[i])
 	{
@@ -114,7 +116,7 @@ void printk(char *fmt, ...)
 			args++;
 		}
 		else
-			print_char_on_terminal(fmt[i], colour);
+			print_short_on_terminal(fmt[i] | (colour << 8));
 		i++;
 	}
 }

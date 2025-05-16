@@ -5,9 +5,7 @@
 
 # define NB_LINES 25
 # define NB_COLUMNS 80
-# define BYTES_FOR_ELEMENT 2
-# define LINE_SIZE BYTES_FOR_ELEMENTS * NB_COLUMNS
-# define SCREENSIZE LINE_SIZE * NB_LINES
+# define SCREEN_SIZE (NB_COLUMNS * NB_LINES)
 
 //TODO: Add safety on defines, if line_size = 0 division by zero might occur
 # define TAB_SIZE 4
@@ -16,16 +14,18 @@
 
 typedef struct s_screen
 {
-	char	buffer[SCREENSIZE];
-	int	current_loc;
+	short	buffer[SCREEN_SIZE];
+	int		current_loc;
+	int		deletable;
 } t_screen;
 
 typedef struct s_terminal
 {
-	char		*vidptr;
+	short		*vidptr;
 	int		current_screen;
 	t_screen	screens[LIMIT_NB_SCREENS];
 	int		current_loc;
+	int		deletable;
 	int		shift;
 	int		capslock;
 	int		numslock;
@@ -41,5 +41,6 @@ extern t_terminal terminal;
 # include "string.h"
 # include "printk.h"
 # include "cursor.h"
+# include "scroll.h"
 
 #endif

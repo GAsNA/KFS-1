@@ -7,14 +7,13 @@
  */
 void init_terminal(void)
 {
-	terminal.vidptr = (char*)BEGIN_VGA;
+	terminal.vidptr = (short*)BEGIN_VGA;
 	terminal.current_screen = 0;
-	
+
 	int i = 0;
-	while (i++ < LIMIT_NB_SCREENS)
-		terminal.screens[i] = init_screen();
 
 	terminal.current_loc = 0;
+	terminal.deletable = 0;
 	terminal.shift = 0;
 	terminal.capslock = 0;
 	terminal.numslock = 1;
@@ -28,15 +27,22 @@ void init_terminal(void)
  */
 void clear_terminal(void)
 {
-	unsigned int i = 0;
-
-	/* this loops clears the screen
-	 * there are 25 lines each of 80 columns;
-	 * each element takes 2 bytes */
-	while(i < SCREENSIZE)
+	for (int i = 0; i < NB_LINES; i++)
 	{
-		terminal.vidptr[i++] = '\0';
-		terminal.vidptr[i++] = LIGHT_GRAY;
+		clear_line(i);
+	}
+}
+
+/**
+ * Blank one line
+ *
+ * @return void
+ */
+void	clear_line(int line_number)
+{
+	for (int i = 0;i < NB_COLUMNS; i++)
+	{
+		terminal.vidptr[line_number * NB_COLUMNS + i] = 0 | (LIGHT_GRAY << 8);
 	}
 }
 
@@ -45,10 +51,17 @@ void clear_terminal(void)
  *
  * @return void
  */
+//TODO this should include a filler and protected memcpy to insert a newline
 void newline_on_terminal(void)
 {
-	terminal.current_loc += LINE_SIZE - terminal.current_loc % LINE_SIZE;
-	move_cursor(terminal.current_loc / 2);
+	scroll_handler();
+	int filling = NB_COLUMNS - (terminal.current_loc % NB_COLUMNS);
+	for (int i = 0; i < filling; i++)
+		terminal.vidptr[terminal.current_loc + i] = ' ' | (LIGHT_GRAY << 8);
+	terminal.current_loc += filling;
+	terminal.deletable = terminal.current_loc;
+	scroll_handler();
+	move_cursor(terminal.current_loc);
 }
 
 /**
@@ -58,15 +71,16 @@ void newline_on_terminal(void)
  */
 void delete_on_terminal(void)
 {
-	if (terminal.current_loc - 2 >= 0)
+	if (terminal.current_loc <= terminal.deletable)
+		return;
+	if (terminal.current_loc > 0 && terminal.current_loc <= SCREEN_SIZE)
 	{
-		terminal.vidptr[terminal.current_loc - 2] = '\0';
-		terminal.current_loc -= 2;
-
-		move_cursor(terminal.current_loc / 2);
+		memcpy(&terminal.vidptr[terminal.current_loc - 1],
+			&terminal.vidptr[terminal.current_loc],
+			sizeof(short) * (SCREEN_SIZE - terminal.current_loc -1));
+		terminal.current_loc--;
+		move_cursor(terminal.current_loc);
 	}
-
-	move_buffer_terminal_to_left();
 }
 
 /**
@@ -74,67 +88,50 @@ void delete_on_terminal(void)
  *
  * @return void
  */
-void tab_on_terminal(void)
+void tab_on_terminal(char colour)
 {
 	int i = 0;
-	while (i++ < TAB_SIZE)
-		print_char_on_terminal(' ', LIGHT_GRAY);
-}
-
-/**
- * Move the buffer to the left of one char on deletion of a char
- *
- * @return void
- */
-void move_buffer_terminal_to_left(void)
-{
-	int i = terminal.current_loc;
-
-	while (terminal.vidptr[i + 2] != '\0')
-	{
-		terminal.vidptr[i] = terminal.vidptr[i + 2];
-		terminal.vidptr[i + 1] = terminal.vidptr[i + 3];
-		i += 2;
-	}
-	terminal.vidptr[i] = '\0';
+	short space = ' ' | (colour << 8);
+	if (terminal.current_loc + 4 >= SCREEN_SIZE)
+		scroll_down();
+	for (int i = 0; i < TAB_SIZE; i++)
+		print_short_on_terminal(space);
 }
 
 /**
  * Print a char on the terminal
  *
- * @param c char to display
- * @param colour colour of the char to display
+ * @param c (8 bits for colour | 8 bits for char)
  * @return void
  */
-void print_char_on_terminal(char c, int colour)
+void print_short_on_terminal(short c)
 {
-	if (c == '\b')
+	if ((c & 0xff) == '\b')
 	{
-		delete_on_screen(terminal.current_screen);
 		delete_on_terminal();
-
 		return;
 	}
-
-	add_char_to_current_screen_buffer(c, colour);
-
-	if (c == '\n')
+	if ((c & 0xff) == '\n')
 	{
 		newline_on_terminal();
 		return;
 	}
-	if (c == '\t')
+	if ((c & 0xff) == '\t')
 	{
-		tab_on_terminal(colour);
+		tab_on_terminal((c >> 8) & 0xff);
 		return;
 	}
 
-	// TODO current_loc update dans move_cursor
-	
+	//TODO: Add insert mode here to avoid check
+	if ((terminal.vidptr[terminal.current_loc] & 0xff) != '\0')
+	{
+		memcpy(&terminal.vidptr[terminal.current_loc + 1],
+			&terminal.vidptr[terminal.current_loc],
+			sizeof(short) * (SCREEN_SIZE - terminal.current_loc - 1));
+	}
 	terminal.vidptr[terminal.current_loc++] = c;
-	terminal.vidptr[terminal.current_loc++] = colour;
-
-	move_cursor(terminal.current_loc / 2);
+	scroll_handler();
+	move_cursor(terminal.current_loc);
 }
 
 /**
@@ -144,11 +141,14 @@ void print_char_on_terminal(char c, int colour)
  * @param colour colour of the str to display
  * @return void
  */
-void print_on_terminal(char *str, int colour)
+void print_on_terminal(char *str, char colour)
 {
 	unsigned int i = 0;
 
-	/* this loop writes the string to video memory */
-	while(str[i] != '\0')
-		print_char_on_terminal(str[i++], colour);
+	// this loop writes the string to video memory
+	for (int i = 0; str[i] ; i++)
+	{
+		short composite_char = (colour << 8) | str[i];
+		print_short_on_terminal(composite_char);
+	}
 }
