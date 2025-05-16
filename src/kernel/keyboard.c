@@ -72,33 +72,44 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	// If is left arrow or keypad 4 with no numslock, move cursor to left
 	else if (keycode == KEYPAD4 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-		terminal.current_loc -= 2;
-		terminal.screens[terminal.current_screen].current_loc -= 2;
-		move_cursor(terminal.current_loc / 2);
+		int new_pos = terminal.current_loc - 1;
+		if (new_pos < terminal.deletable)
+			return (is_checked = 1);
+		terminal.current_loc = new_pos;
+		move_cursor(terminal.current_loc);
 		is_checked = 1;
 	}
 	// If is right arrow or keypad 6 with no numslock, move cursor to right
 	else if (keycode == KEYPAD6 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-		terminal.current_loc += 2;
-		terminal.screens[terminal.current_screen].current_loc -= 2;
-		move_cursor(terminal.current_loc / 2);
+		if ((terminal.vidptr[terminal.current_loc] & 0xff) == '\0')
+			return (is_checked = 1);
+		terminal.current_loc++;
+		move_cursor(terminal.current_loc);
 		is_checked = 1;
 	}
 	// If is up arrow or keypad 8 with no numslock, move cursor up
 	else if (keycode == KEYPAD8 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-		terminal.current_loc -= NB_COLUMNS * 2;
-		terminal.screens[terminal.current_screen].current_loc -= 2;
-		move_cursor(terminal.current_loc / 2);
+		int new_pos = terminal.current_loc - NB_COLUMNS;
+		if (new_pos <= terminal.deletable)
+			return (is_checked = 1);
+		terminal.current_loc = new_pos;
+		move_cursor(terminal.current_loc);
 		is_checked = 1;
 	}
 	// If is down arrow or keypad 2 with no numslock, move cursor down
 	else if (keycode == KEYPAD2 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
-		terminal.current_loc += NB_COLUMNS * 2;
-		terminal.screens[terminal.current_screen].current_loc -= 2;
-		move_cursor(terminal.current_loc / 2);
+		int new_pos = terminal.current_loc + NB_COLUMNS;
+		if ((terminal.vidptr[new_pos] & 0xff) == '\0')
+		{
+			for (;(terminal.vidptr[terminal.current_loc] & 0xff);terminal.current_loc++);
+			move_cursor(terminal.current_loc);
+			return (is_checked = 1);
+		}
+		terminal.current_loc = new_pos;
+		move_cursor(terminal.current_loc);
 		is_checked = 1;
 	}
 	// If is inser key (keypad0 code with escape code or no numslock)
@@ -111,6 +122,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPADPOINT && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		// TODO delete to right
+		// perhaps use move right 1 then delete to left ?
 		is_checked = 1;
 	}
 	// If is '/' numpad key (slash code with escape code) and no numslock, then do nothing 
@@ -140,7 +152,7 @@ void keyboard_handler(void) {
 	unsigned char keycode;
 
 	t_key selected_key;
-	char selected_char;
+	short selected_char;
 
 	int is_pressed = 1;
 
@@ -170,7 +182,7 @@ void keyboard_handler(void) {
 	/* If not pressed and is escaped, then is not escaped */
 	if (!is_pressed && terminal.to_escape)
 		terminal.to_escape = 0;
-		
+
 	/* Check if keycode is shift */
 	if (keycode == LSHIFT || keycode == RSHIFT)
 	{
@@ -180,7 +192,7 @@ void keyboard_handler(void) {
 			terminal.shift = 0;
 		return;
 	}
-		
+
 	/* If key is not pressed, do not write on terminal and return */
 	if (!is_pressed)
 		return;
@@ -195,7 +207,7 @@ void keyboard_handler(void) {
 	/* Check the keycode for non-printable char */
 	if (check_for_shortcut_and_escaped_keycode(keycode))
 		return;
-		
+
 	/* Selected the char given by inputs */
 	selected_key = keyboard_map[keycode];
 
@@ -214,5 +226,5 @@ void keyboard_handler(void) {
 		return;
 
 	/* Write on terminal the selected char */
-	print_char_on_terminal(selected_char, LIGHT_GRAY);
+	print_short_on_terminal(selected_char | (LIGHT_GRAY << 8));
 }

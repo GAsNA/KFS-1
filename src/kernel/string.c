@@ -75,6 +75,12 @@ void *memcpy(void *dest, const void *src, int n)
 		return 0;
 
 	i = -1;
+	if (dest > src)
+	{
+		while (n--)
+			((unsigned char *) dest)[n] = ((unsigned char *) src)[n];
+		return dest;
+	}
 	while (++i < n)
 		((unsigned char *) dest)[i] = ((unsigned char *) src)[i];
 
@@ -108,7 +114,7 @@ int strncmp(char *s1, char *s2, unsigned int n)
  * @param colour the colour to use to print
  * @return void
  */
-void putaddr(int num, int colour)
+void putaddr(int num, char colour)
 {
 	char str[255];
 	int i;
@@ -126,7 +132,7 @@ void putaddr(int num, int colour)
 	i--;
 	while (i >= 0)
 	{
-		print_char_on_terminal(str[i], colour);
+		print_short_on_terminal(str[i] | (colour << 8));
 		i--;
 	}
 }
@@ -138,7 +144,7 @@ void putaddr(int num, int colour)
  * @param colour the colour to use to print
  * @return void
  */
-void puthexa_small(int nb, int colour)
+void puthexa_small(int nb, char colour)
 {
 	char *hexa = "0123456789abcdef";
 	long	n;
@@ -149,10 +155,10 @@ void puthexa_small(int nb, int colour)
 	if (n >= 16)
 	{
 		puthexa_small(n / 16, colour);
-		print_char_on_terminal(hexa[n % 16], colour);
+		print_short_on_terminal(hexa[n % 16] | (colour << 8));
 	}
 	else
-		print_char_on_terminal(hexa[n], colour);
+		print_short_on_terminal(hexa[n] | (colour << 8));
 }
 
 /**
@@ -162,7 +168,7 @@ void puthexa_small(int nb, int colour)
  * @param colour the colour to use to print
  * @return void
  */
-void puthexa_capital(int nb, int colour)
+void puthexa_capital(int nb, char colour)
 {
 	char *hexa = "0123456789ABCDEF";
 	long	n;
@@ -173,8 +179,8 @@ void puthexa_capital(int nb, int colour)
 	if (n >= 16)
 	{
 		puthexa_capital(n / 16, colour);
-		print_char_on_terminal(hexa[n % 16], colour);
+		print_short_on_terminal(hexa[n % 16] | (colour << 8));
 	}
 	else
-		print_char_on_terminal(hexa[n], colour);
+		print_short_on_terminal(hexa[n] | (colour << 8));
 }
