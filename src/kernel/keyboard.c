@@ -92,7 +92,7 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD8 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		int new_pos = terminal.current_loc - NB_COLUMNS;
-		if (new_pos <= terminal.deletable)
+		if (new_pos <= terminal.deletable || new_pos < 0)
 			return (is_checked = 1);
 		terminal.current_loc = new_pos;
 		move_cursor(terminal.current_loc);
@@ -102,6 +102,8 @@ static int check_for_shortcut_and_escaped_keycode(unsigned char keycode)
 	else if (keycode == KEYPAD2 && (terminal.to_escape == 1 || terminal.numslock == 0))
 	{
 		int new_pos = terminal.current_loc + NB_COLUMNS;
+		if (new_pos >= SCREEN_SIZE)
+			return (is_checked = 1);
 		if ((terminal.vidptr[new_pos] & 0xff) == '\0')
 		{
 			for (;(terminal.vidptr[terminal.current_loc] & 0xff);terminal.current_loc++);
