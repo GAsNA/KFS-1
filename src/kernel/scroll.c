@@ -15,7 +15,7 @@ void	scroll_handler()
 //TODO: Fix scroll not copying last line as expected
 void	scroll_down(void)
 {
-	memcpy(terminal.vidptr,terminal.vidptr + NB_COLUMNS, sizeof(short) * (terminal.current_loc - NB_COLUMNS));
+	memcpy(terminal.vidptr,terminal.vidptr + NB_COLUMNS, sizeof(short) * (NB_COLUMNS * (NB_LINES - 1)));
 	clear_line(NB_LINES - 1);
 	terminal.current_loc -= NB_COLUMNS;
 	terminal.deletable -= NB_COLUMNS;

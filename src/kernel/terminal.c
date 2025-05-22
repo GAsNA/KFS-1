@@ -51,16 +51,21 @@ void	clear_line(int line_number)
  *
  * @return void
  */
-//TODO this should include a filler and protected memcpy to insert a newline
 void newline_on_terminal(void)
 {
-	scroll_handler();
+	if (terminal.current_loc / NB_COLUMNS == NB_LINES - 1)
+		scroll_down();
 	int filling = NB_COLUMNS - (terminal.current_loc % NB_COLUMNS);
+	if ((terminal.vidptr[terminal.current_loc] & 0xff) != '\0')
+	{
+		memcpy(&terminal.vidptr[terminal.current_loc + filling],
+			&terminal.vidptr[terminal.current_loc],
+			(SCREEN_SIZE - terminal.current_loc - filling) * sizeof(short));
+	}
 	for (int i = 0; i < filling; i++)
 		terminal.vidptr[terminal.current_loc + i] = ' ' | (LIGHT_GRAY << 8);
 	terminal.current_loc += filling;
 	terminal.deletable = terminal.current_loc;
-	scroll_handler();
 	move_cursor(terminal.current_loc);
 }
 
