@@ -5,9 +5,9 @@
 
 # define NB_LINES 25
 # define NB_COLUMNS 80
+//WARNING:NB_COLUMNS = 0 division by zero might occur
 # define SCREEN_SIZE (NB_COLUMNS * NB_LINES)
 
-//TODO: Add safety on defines, if line_size = 0 division by zero might occur
 # define TAB_SIZE 4
 
 # define LIMIT_NB_SCREENS 5
