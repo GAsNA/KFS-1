@@ -1,9 +1,5 @@
 # KFS-1
 
-<img alt="Static Badge" width="250" src="https://img.shields.io/badge/%2F!%5C-In%20Progress-%23cf0c0c">
-
-<br/>
-
 Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
 This project is the first in a serie of 10 projects, introducing into the Kernel world. This first project is a very basic kernel with some features.
@@ -13,24 +9,16 @@ Is based on a i386 (x86) architecture.
 ![](images/preview_kfs-1_rleseur.gif)
 
 **Options**:
-- [x] Color support
-- [x] Keyboard handler
-- [x] Helper 'printk'
-- [ ] Scroll and cursor support
-- [x] Different screens helper and keyboard shortcut
-- [x] Create Iso image from kernel binary
+- Color support
+- Keyboard handler
+- Helper 'printk'
+- Scroll and cursor support
+- Different screens helper and keyboard shortcut
+- Create Iso image from kernel binary
 
 **Shortcuts**:
 - **F1**: go to previous screen
 - **F2**: go to next screen
-
-**TODO**:
-- Cursor in position before changing screen (actually, it's going to end of buffer)
-- Fix deletion for \n and \t
-- Clean code for .h please
-- Store files in different folders (in src/kernel)
-- Control deletion on terminal (keep in memory the last char that can be deleted)
-- Check for TODO in code
 
 *NB: you can use the dependencies.txt to install all necessaries packages. ``sudo apt/dnf install $(cat dependencies.txt)``*
 
