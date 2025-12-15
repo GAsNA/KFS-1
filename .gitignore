@@ -4,3 +4,4 @@ build/
 
 # Relative to compiled elements
 *.iso
+kernel-kfs*
