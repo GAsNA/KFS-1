@@ -127,9 +127,11 @@ void print_short_on_terminal(short c)
 		tab_on_terminal((c >> 8) & 0xff);
 		return;
 	}
-
-	//TODO: Add insert mode here to avoid check
-	if ((terminal.vidptr[terminal.current_loc] & 0xff) != '\0')
+	/* You are an ugly child but we still love you */
+	if (terminal.vidptr[SCREEN_SIZE - 1] & 0xff != '\0')
+		scroll_down();
+	if ((terminal.vidptr[terminal.current_loc] & 0xff) != '\0'
+		&& terminal.current_loc <= SCREEN_SIZE)
 	{
 		memcpy(&terminal.vidptr[terminal.current_loc + 1],
 			&terminal.vidptr[terminal.current_loc],
