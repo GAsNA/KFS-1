@@ -18,6 +18,7 @@ void init_terminal(void)
 	terminal.capslock = 0;
 	terminal.numslock = 1;
 	terminal.to_escape = 0;
+	init_screens();
 }
 
 /**
@@ -82,7 +83,7 @@ void delete_on_terminal(void)
 	{
 		memcpy(&terminal.vidptr[terminal.current_loc - 1],
 			&terminal.vidptr[terminal.current_loc],
-			sizeof(short) * (SCREEN_SIZE - terminal.current_loc -1));
+			sizeof(short) * (SCREEN_SIZE - terminal.current_loc - 1));
 		terminal.current_loc--;
 		move_cursor(terminal.current_loc);
 	}
