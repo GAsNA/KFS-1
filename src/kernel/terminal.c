@@ -97,7 +97,7 @@ void tab_on_terminal(char colour)
 {
 	int i = 0;
 	short space = ' ' | (colour << 8);
-	if (terminal.current_loc + 4 >= SCREEN_SIZE)
+	if (terminal.current_loc + TAB_SIZE >= SCREEN_SIZE)
 		scroll_down();
 	for (int i = 0; i < TAB_SIZE; i++)
 		print_short_on_terminal(space);
